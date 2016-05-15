@@ -21,7 +21,6 @@ Currently available in English!
 
 ```javascript
 $('.summernote').summernote({
-    tabsize:2,
     toolbar:[
         ['cleaner',['cleaner']],
         ['style',['style']],
@@ -34,6 +33,11 @@ $('.summernote').summernote({
         ['insert',['media','link','hr']],
         ['view',['fullscreen','codeview']],
         ['help',['help']]
+    ],
+    cleaner:[
+        element:'.summernote', // The element you use to initialise Summernote.
+        time:900, // Time to indicate that the Text has been Cleaned, changes the button colour.
+        action:'button' // Options: button|both|paste (Currently only button is in use until we work out how to capture pasted content before insertion.
     ]
 });
 ```
