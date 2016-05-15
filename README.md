@@ -41,3 +41,7 @@ $('.summernote').summernote({
     ]
 });
 ```
+
+TODO:
+- Get pasting of content clean up working.
+- Check other editors like Libre Office, Open Office, and others are cleaned as well.
