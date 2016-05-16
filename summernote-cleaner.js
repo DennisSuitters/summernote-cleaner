@@ -60,8 +60,8 @@
                         tooltip:lang.cleaner.tooltip,
                         click:function(){
                             unsaved=true;
-                            var eText=cleanText($(options.element).text());
-                            $(options.element).text(eText);
+                            var text=cleanText($(options.element).text());
+                            $(options.element).summernote("code",text);
                             $('.note-resizebar').append('<div id="cleanerAlert" style="position:absolute;bottom:0;left:2px;font-size:10px;">'+lang.cleaner.notification+'</div>');
                             setTimeout(function(){$('#cleanerAlert').remove();},options.time);
                         }
