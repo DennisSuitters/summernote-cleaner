@@ -36,7 +36,7 @@ $('.summernote').summernote({
     ],
     cleaner:[
         element:'.summernote', // The element you use to initialise Summernote.
-        time:900, // Time to indicate that the Text has been Cleaned, changes the button colour.
+        time:900, // Time to indicate that the Text has been Cleaned, Shows Notification in StatsBar.
         action:'both' // Options: button|both|paste
     ]
 });
