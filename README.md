@@ -36,10 +36,10 @@ $('.summernote').summernote({
         ['view',['fullscreen','codeview']],
         ['help',['help']]
     ],
-    cleaner:[
+    cleaner:{
         element:'.summernote', // The element you use to initialise Summernote.
         time:900, // Time to display the Notification.
         action:'both' // Options: button|both|paste
-    ]
+    }
 });
 ```
