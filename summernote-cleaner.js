@@ -62,8 +62,8 @@
                             unsaved=true;
                             var text=cleanText($(options.element).text());
                             $(options.element).summernote("code",text);
-                            $('.note-resizebar').append('<div id="cleanerAlert" style="position:absolute;bottom:0;left:2px;font-size:10px;">'+lang.cleaner.notification+'</div>');
-                            setTimeout(function(){$('#cleanerAlert').remove();},options.time);
+                            $('.note-resizebar').append('<div class="cleanerAlert" style="position:absolute;bottom:0;left:2px;font-size:10px;">'+lang.cleaner.notification+'</div>');
+                            setTimeout(function(){$('.cleanerAlert').remove();},options.time);
                         }
                     });
                     return button.render();
@@ -73,12 +73,11 @@
                 'summernote.paste':function(we,e){
                     if(options.action=='both'||options.action=='paste'){
                         e.preventDefault();
-                        var ua = window.navigator.userAgent;
-                        var msie = ua.indexOf("MSIE ");
-                        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  { // If Internet Explorer, return version number
+                        var ua=window.navigator.userAgent;
+                        var msie=ua.indexOf("MSIE ");
+                        if (msie>0||!!navigator.userAgent.match(/Trident.*rv\:11\./)){
                             var text=window.clipboardData.getData("Text");
-                            
-                        } else { // If another browser, return 0
+                        }else{
                             var text=e.originalEvent.clipboardData.getData('text/plain');
                         }
                         var text=cleanText(text);
