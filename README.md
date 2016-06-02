@@ -43,3 +43,7 @@ $('.summernote').summernote({
     }
 });
 ```
+
+#### Thanks:
+- [wheelspin](https://github.com/wheelspin)
+- - For adding Microsoft Browsers Support, and modifying the alert.
