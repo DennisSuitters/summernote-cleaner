@@ -37,13 +37,14 @@ $('.summernote').summernote({
         ['help',['help']]
     ],
     cleaner:{
-        element:'.summernote', // The element you use to initialise Summernote.
-        time:900, // Time to display the Notification.
-        action:'both' // Options: button|both|paste
+            el:'.summernote',  // Element ID or Class used to Initialise Summernote.
+            notTime:2400, // Time to display Notifications.
+            action:'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+            icon:'<i class="note-icon">[Your Button]</i>'
     }
 });
 ```
 
 #### Thanks:
 - [wheelspin](https://github.com/wheelspin)
-- - For adding Microsoft Browsers Support, and modifying the alert.
+  - For adding Microsoft Browsers Support, and modifying the alert.
