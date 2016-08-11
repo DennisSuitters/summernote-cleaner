@@ -59,10 +59,10 @@
                         contents:options.cleaner.icon,
                         tooltip:lang.cleaner.tooltip,
                         click:function(){
-                            var text=cleanText($(options.cleaner.el).text());
-                            $(options.cleaner.el).summernote("code",text);
-                            $('.note-resizebar').append('<div class="summernote-seoAlert '+options.cleaner.successClass+'" style="position:absolute;bottom:0;left:2px;">'+lang.cleaner.not+'</div>');
-                            setTimeout(function(){$('.summernote-seoAlert').remove();},options.cleaner.notTime);
+                            var text=cleanText($note.summernote().text());
+                            $note.summernote("code",text);
+                            $editor.find('.note-resizebar').append('<div class="summernote-seoAlert '+options.cleaner.successClass+'" style="position:absolute;bottom:0;left:2px;">'+lang.cleaner.not+'</div>');
+                            setTimeout(function(){$editor.find('.summernote-seoAlert').remove();},options.cleaner.notTime);
                         }
                     });
                     return button.render();
@@ -80,10 +80,9 @@
                             var text=e.originalEvent.clipboardData.getData('text/plain');
                         }
                         var text=cleanText(text);
-                        var $dom=$('<div class="pasted"/>').html(text);
-                        $note.summernote('insertNode',$dom[0]);
-                        $('.note-resizebar').append('<div class="summernote-seoAlert '+options.cleaner.successClass+'" style="position:absolute;bottom:0;left:2px;">'+lang.cleaner.not+'</div>');
-                        setTimeout(function(){$('.summernote-seoAlert').remove();},options.cleaner.notTime);
+                        $note.summernote('code',text);
+                        $editor.find('.note-resizebar').append('<div class="summernote-seoAlert '+options.cleaner.successClass+'" style="position:absolute;bottom:0;left:2px;">'+lang.cleaner.not+'</div>');
+                        setTimeout(function(){$editor.find('.summernote-seoAlert').remove();},options.cleaner.notTime);
                     }
                 }
             }
