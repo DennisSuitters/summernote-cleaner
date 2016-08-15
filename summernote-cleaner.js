@@ -35,8 +35,10 @@
             var options=context.options;
             var lang=options.langInfo;
             var cleanText=function(txt){
-                var sS=/(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g;
+                var sS=/(\r| class=(")?Mso[a-zA-Z]+(")?)/g;
                 var out=txt.replace(sS,' ');
+                var nL = /(\n)+/g;
+                out = out.replace(nL, '<p><br\/><\/p>');
                 var cS=new RegExp('<!--(.*?)-->','gi');
                 out=out.replace(cS,'');
                 var tS=new RegExp('<(/)*(meta|link|span|\\?xml:|st1:|o:|font)(.*?)>','gi');
