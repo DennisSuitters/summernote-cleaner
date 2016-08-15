@@ -61,8 +61,14 @@
                             contents: options.cleaner.icon,
                             tooltip: lang.cleaner.tooltip,
                             click: function() {
-                                var text = cleanText($note.summernote().text());
-                                var old = $note.summernote('code');
+
+                                var text = cleanText(text);
+                                var add = $note.summernote('code');
+                                $note.summernote('code', add + text);
+                                if ($note.summernote('createRange').toString()) {
+                                    $note.summernote('code', text);
+                                }
+
                                 $note.summernote('code', old + text);
                                 $editor.find('.note-resizebar').append('<div class="summernote-seoAlert ' + options.cleaner.successClass + '" style="position:absolute;bottom:0;left:2px;">' + lang.cleaner.not + '</div>');
                                 setTimeout(function() {
@@ -84,8 +90,14 @@
                             } else {
                                 var text = e.originalEvent.clipboardData.getData('text/plain');
                             }
+
                             var text = cleanText(text);
-                            var old = $note.summernote('code');
+                            var add = $note.summernote('code');
+                            $note.summernote('code', add + text);
+                            if ($note.summernote('createRange').toString()) {
+                                $note.summernote('code', text);
+                            }
+
                             $note.summernote('code', old + text);
                             $editor.find('.note-resizebar').append('<div class="summernote-seoAlert ' + options.cleaner.successClass + '" style="position:absolute;bottom:0;left:2px;">' + lang.cleaner.not + '</div>');
                             setTimeout(function() {
