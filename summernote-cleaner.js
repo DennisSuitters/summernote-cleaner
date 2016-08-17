@@ -58,7 +58,6 @@
                         tooltip:lang.cleaner.tooltip,
                         click:function(){
                             if($note.summernote('createRange').toString()){
-                                alert('Clean Range');
                                 var text=cleanText($note.summernote('createRange').toString());
                                 $note.summernote('insertText',text);
                             }else{
