@@ -1,7 +1,7 @@
 # summernote-cleaner
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 
-summernote-cleaner removes the unnecessary and possibly layout breaking Crud that gets added to MSWord, Open Office, and Libre Office Documents.
+summernote-cleaner removes the unnecessary and possibly layout breaking Crud that gets added by MSWord, Open Office, and Libre Office Documents.
 
 The plugin can function in a couple of different ways. It can have a Toolbar Button which allows the Cleaning of the Editor's Text, or Pasted Text can be Cleaned when Pasted into the Text Editor.
 
@@ -37,9 +37,10 @@ $('.summernote').summernote({
         ['help',['help']]
     ],
     cleaner:{
-            el:'.summernote',  // Element ID or Class used to Initialise Summernote.
-            notTime:2400, // Time to display Notifications.
+             notTime:2400, // Time to display Notifications.
             action:'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+            newline:'<br>', // Summernote's default is to use '<p><br></p>'
+            notStyle:'position:absolute;bottom:0;left:2px', // Position of Notification
             icon:'<i class="note-icon">[Your Button]</i>'
     }
 });
