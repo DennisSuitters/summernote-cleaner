@@ -32,7 +32,6 @@
 
     $.extend($.summernote.plugins,{
         'cleaner':function(context){
-            console.log(context);
             var self=this;
             var ui=$.summernote.ui;
             var $note=context.layoutInfo.note;
@@ -40,29 +39,39 @@
             var options=context.options;
             var lang=options.langInfo;
             var cleanText=function(txt,nlO){
-                var sS=/(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g;
-                var out=txt.replace(sS,' ');
+                if(options.cleaner.keepHtml){
+                    var sS=/(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g;
+                    var out=txt.replace(sS,' ');
 
-                var nL=/(\n)+/g;
-                out=out.replace(nL,nlO);
-                var cS=new RegExp('<!--(.*?)-->','gi');
-                out=out.replace(cS,'');
-                var tS=new RegExp('<(/)*(meta|link|span|\\?xml:|st1:|o:|font)(.*?)>','gi');
-                out=out.replace(tS,'');
-
-                //Remove Bad tags
-                var bT=options.cleaner.badTags;
-                for(var i=0;i<bT.length;i++){
-                    tS=new RegExp('<'+bT[i]+'.*?'+bT[i]+'(.*?)>','gi');
+                    var nL=/(\n)+/g;
+                    out=out.replace(nL,nlO);
+                    var cS=new RegExp('<!--(.*?)-->','gi');
+                    out=out.replace(cS,'');
+                    var tS=new RegExp('<(/)*(meta|link|span|\\?xml:|st1:|o:|font)(.*?)>','gi');
                     out=out.replace(tS,'');
+
+                    //Remove Bad tags
+                    var bT=options.cleaner.badTags;
+                    for(var i=0;i<bT.length;i++){
+                        tS=new RegExp('<'+bT[i]+'.*?'+bT[i]+'(.*?)>','gi');
+                        out=out.replace(tS,'');
+                    }
+
+                    //Remove Bad Attributes
+                    var bA=options.cleaner.badAttributes;
+                    for(var ii=0;ii<bA.length;ii++){
+                        //var aS=new RegExp(' ('+bA[ii]+'="(.*?)")|('+bA[ii]+'=\'(.*?)\')','gi');
+                        var aS=new RegExp(' '+bA[ii]+'=[\'|"](.*?)[\'|"]','gi');
+                        out=out.replace(aS,'');
+                    }
+
+                }else{
+                    var sS=/(\r| class=(")?Mso[a-zA-Z]+(")?)/g;
+                    var out=txt.replace(sS,' ');
+                    var nL=/(\n)+/g;
+                    out=out.replace(nL,nlO);
                 }
 
-                //Remove Bad Attributes
-                var bA=options.cleaner.badAttributes;
-                for(var ii=0;ii<bA.length;ii++){
-                    var aS=new RegExp(' ('+bA[ii]+'="(.*?)")|('+bA[ii]+'=\'(.*?)\')','gi');
-                    out=out.replace(aS,'');
-                }
                 return out;
             };
             if(options.cleaner.action=='both'||options.cleaner.action=='button'){
