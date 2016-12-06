@@ -42,6 +42,9 @@ $('.summernote').summernote({
             newline:'<br>', // Summernote's default is to use '<p><br></p>'
             notStyle:'position:absolute;bottom:0;left:2px', // Position of Notification
             icon:'<i class="note-icon">[Your Button]</i>'
+            keepHtml: false, //Remove all Html formats
+            badTags: ['style','script','applet','embed','noframes','noscript', 'html'], //Remove full tags with contents
+            badAttributes: ['style','start'] //Remove attributes from remaining tags            
     }
 });
 ```
