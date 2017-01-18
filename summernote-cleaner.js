@@ -97,12 +97,7 @@
               var text=e.originalEvent.clipboardData.getData((options.cleaner.keepHtml?'text/html':'text/plain'));
             }
             var text=cleanText(text,options.cleaner.newline);
-            if($note.summernote('createRange').toString()){
-              $note.summernote('pasteHTML',text);
-            }else{
-              var old=$note.summernote('code');
-              $note.summernote('pasteHTML',old+text);
-            }
+            $note.summernote('pasteHTML', text);
             $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="'+options.cleaner.notStyle+'">'+lang.cleaner.not+'</div>');
             setTimeout(function(){$editor.find('.summernote-cleanerAlert').remove();},options.cleaner.notTime);
           }
