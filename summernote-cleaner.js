@@ -76,9 +76,9 @@
                 $note.summernote('pasteHTML',text);
               }else{
                 var text=cleanText($note.summernote().text(),options.cleaner.newline);
-                var old=$note.summernote('code');
+                $note.summernote('code',text);
               }
-              if (options.cleaner.notTime > 0) {
+              if(options.cleaner.notTime>0){
                 $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="'+options.cleaner.notStyle+'">'+lang.cleaner.not+'</div>');
                 setTimeout(function(){$editor.find('.summernote-cleanerAlert').remove();},options.cleaner.notTime);
               }
@@ -100,7 +100,7 @@
             }
             var text=cleanText(text,options.cleaner.newline);
             $note.summernote('pasteHTML',text);
-            if (options.cleaner.notTime > 0) {
+            if(options.cleaner.notTime>0){
               $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="'+options.cleaner.notStyle+'">'+lang.cleaner.not+'</div>');
               setTimeout(function(){$editor.find('.summernote-cleanerAlert').remove();},options.cleaner.notTime);
             }
