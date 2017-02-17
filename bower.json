@@ -1,0 +1,27 @@
+{
+    "name": "summernote-cleaner",
+    "version": "1.0.0",
+    "description": "A plugin for the Summernote WYSIWYG editor.",
+    "main": [
+        "./summernote-cleaner.js"
+    ],
+    "keywords": [
+        "summernote"
+    ],
+    "authors": [
+        "StudioJunkyard"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/StudioJunkyard/summernote-cleaner.git"
+    },
+    "homepage": "https://github.com/StudioJunkyard/summernote-cleaner",
+}
