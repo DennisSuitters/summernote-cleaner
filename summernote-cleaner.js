@@ -77,10 +77,10 @@
             tooltip:lang.cleaner.tooltip,
             click:function(){
               if($note.summernote('createRange').toString()){
-                var text=cleanText($note.summernote('createRange').toString(),options.cleaner.newline);
+                var text=$note.summernote('createRange').toString();
                 $note.summernote('pasteHTML',text);
-              }else{
-                var text=cleanText($note.summernote().text(),options.cleaner.newline);
+              } else {
+                var text=$($note.summernote('code')).text();
                 $note.summernote('code',text);
               }
               if(options.cleaner.notTime>0){
