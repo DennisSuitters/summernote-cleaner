@@ -98,13 +98,21 @@
             e.preventDefault();
             var ua=window.navigator.userAgent;
             var msie=ua.indexOf("MSIE ");
-            if(msie>0||!!navigator.userAgent.match(/Trident.*rv\:11\./)){
+            msie=msie>0||!!navigator.userAgent.match(/Trident.*rv\:11\./);
+            if(msie){
               var text=window.clipboardData.getData("Text");
             }else{
               var text=e.originalEvent.clipboardData.getData((options.cleaner.keepHtml?'text/html':'text/plain'));
             }
             var text=cleanText(text,options.cleaner.newline);
-            $note.summernote('pasteHTML',text);
+            var pasteFn=function(){
+              $note.summernote('pasteHTML',text);
+            }
+            if(msie){
+              setTimeout(pasteFn,1);
+            }else{
+              pasteFn();
+            }
             if(options.cleaner.notTime>0){
               $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="'+options.cleaner.notStyle+'">'+lang.cleaner.not+'</div>');
               setTimeout(function(){$editor.find('.summernote-cleanerAlert').remove();},options.cleaner.notTime);
