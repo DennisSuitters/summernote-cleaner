@@ -56,11 +56,13 @@
             out=out.replace(tS,'');
           }
           var allowedTags = options.cleaner.keepOnlyTags;
-          allowedTags = (((allowedTags || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('');
-          var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi
-          out = out.replace(tags, function ($0, $1) {
-            return allowedTags.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''
-          });
+          if(allowedTags.length > 0) {
+            allowedTags = (((allowedTags || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('');
+            var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi
+            out = out.replace(tags, function ($0, $1) {
+              return allowedTags.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''
+            });
+          }
           var bA=options.cleaner.badAttributes;
           for(var ii=0;ii<bA.length;ii++){
             //var aS=new RegExp(' ('+bA[ii]+'="(.*?)")|('+bA[ii]+'=\'(.*?)\')','gi');
