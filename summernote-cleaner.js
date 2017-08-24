@@ -104,7 +104,6 @@
       this.events={
         'summernote.paste':function(we,e){
           if(options.cleaner.action=='both'||options.cleaner.action=='paste'){
-            e.preventDefault();
             var ua=window.navigator.userAgent;
             var msie=ua.indexOf("MSIE ");
             msie=msie>0||!!navigator.userAgent.match(/Trident.*rv\:11\./);
@@ -113,18 +112,22 @@
             }else{
               var text=e.originalEvent.clipboardData.getData((options.cleaner.keepHtml?'text/html':'text/plain'));
             }
-            var text=cleanText(text,options.cleaner.newline);
-            var pasteFn=function(){
-              $note.summernote('pasteHTML',text);
-            }
-            if(msie){
-              setTimeout(pasteFn,1);
-            }else{
-              pasteFn();
-            }
-            if(options.cleaner.notTime>0){
-              $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="'+options.cleaner.notStyle+'">'+lang.cleaner.not+'</div>');
-              setTimeout(function(){$editor.find('.summernote-cleanerAlert').remove();},options.cleaner.notTime);
+  
+            if (text && text != '') {
+              e.preventDefault();
+              var text=cleanText(text,options.cleaner.newline);
+              var pasteFn=function(){
+                $note.summernote('pasteHTML',text);
+              }
+              if(msie){
+                setTimeout(pasteFn,1);
+              }else{
+                pasteFn();
+              }
+              if(options.cleaner.notTime>0){
+                $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="'+options.cleaner.notStyle+'">'+lang.cleaner.not+'</div>');
+                setTimeout(function(){$editor.find('.summernote-cleanerAlert').remove();},options.cleaner.notTime);
+              }
             }
           }
         }
