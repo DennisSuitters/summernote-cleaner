@@ -40,9 +40,10 @@
       var lang=options.langInfo;
       var cleanText=function(txt,nlO){
         if(options.cleaner.keepHtml){
+          var out = txt;
           if(!options.cleaner.keepClasses){
             var sS=/(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g;
-            var out=txt.replace(sS,' ');
+            out=txt.replace(sS,' ');
           }
           var nL=/(\n)+/g;
           out=out.replace(nL,nlO);
