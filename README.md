@@ -51,15 +51,8 @@ $('.summernote').summernote({
 });
 ```
 
-#### 4. Check out our other Summernote Plugins
-- [Summernote Video Attributes](https://github.com/StudioJunkyard/summernote-video-attributes)
-  - Insert Video's from various Streaming Services, with Options Editing.
-- [Summernote Image Attributes](https://github.com/StudioJunkyard/summernote-image-attributes)
-  - Add Button to Image Popup to enable editing various Image Attributes, including adding Links.
-- [Summernote Save Button](https://github.com/StudioJunkyard/summernote-save-button)
-  - Add a Save Button to the Toolbar when Summernote is inside a form with a Textarea to easily save your document.
-- [Summernote SEO](https://github.com/StudioJunkyard/summernote-seo)
-  - Adds a Dropdown to the Toolbar that allows extracting selected text and inserts it into input elements for editing.
+#### 4. Check out our other Summernote Plugins via our main Github page.
+- [Diemen Design](https://github.com/DiemenDesign/)
 
 
 #### Thanks:

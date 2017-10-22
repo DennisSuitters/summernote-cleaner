@@ -8,17 +8,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/StudioJunkyard/summernote-cleaner.git"
+    "url": "git+https://github.com/DiemenDesign/summernote-cleaner.git"
   },
   "keywords": [
     "summernote"
   ],
-  "author": "StudioJunkyard",
+  "author": "DiemenDesign",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/StudioJunkyard/summernote-cleaner/issues"
+    "url": "https://github.com/DiemenDesign/summernote-cleaner/issues"
   },
-  "homepage": "https://github.com/StudioJunkyard/summernote-cleaner#readme",
+  "homepage": "https://github.com/DiemenDesign/summernote-cleaner#readme",
   "dependencies": {
     "summernote": "^0.8.2"
   }

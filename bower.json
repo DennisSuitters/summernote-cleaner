@@ -9,7 +9,7 @@
         "summernote"
     ],
     "authors": [
-        "StudioJunkyard"
+        "DiemenDesign"
     ],
     "license": "MIT",
     "ignore": [
@@ -21,7 +21,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git://github.com/StudioJunkyard/summernote-cleaner.git"
+        "url": "git://github.com/DiemenDesign/summernote-cleaner.git"
     },
-    "homepage": "https://github.com/StudioJunkyard/summernote-cleaner"
+    "homepage": "https://github.com/DiemenDesign/summernote-cleaner"
 }
