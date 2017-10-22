@@ -40,7 +40,7 @@
       var lang=options.langInfo;
       var cleanText=function(txt,nlO){
         if(options.cleaner.keepHtml){
-          var out = txt;
+          var out=txt;
           if(!options.cleaner.keepClasses){
             var sS=/(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g;
             out=txt.replace(sS,' ');
@@ -56,12 +56,12 @@
             tS=new RegExp('<'+bT[i]+'.*?'+bT[i]+'(.*?)>','gi');
             out=out.replace(tS,'');
           }
-          var allowedTags = options.cleaner.keepOnlyTags;
-          if(allowedTags.length > 0) {
-            allowedTags = (((allowedTags || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('');
-            var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi
-            out = out.replace(tags, function ($0, $1) {
-              return allowedTags.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''
+          var allowedTags=options.cleaner.keepOnlyTags;
+          if(allowedTags.length>0){
+            allowedTags=(((allowedTags||'')+'').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('');
+            var tags=/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi
+            out=out.replace(tags,function($0,$1){
+              return allowedTags.indexOf('<'+$1.toLowerCase()+'>') > -1 ? $0 : ''
             });
           }
           var bA=options.cleaner.badAttributes;
@@ -87,10 +87,12 @@
             tooltip:lang.cleaner.tooltip,
             click:function(){
               if($note.summernote('createRange').toString()){
-                var text=cleanText($note.summernote('createRange').toString(),options.cleaner.newline);
+//                var text=cleanText($note.summernote('createRange').toString(),options.cleaner.newline);
+                var text=$note.summernote('createRange').toString();
                 $note.summernote('pasteHTML',text);
               }else{
-                var text=cleanText($note.summernote().text(),options.cleaner.newline);
+//                var text=cleanText($note.summernote().text(),options.cleaner.newline);
+                var text=$($note.summernote('code')).text();
                 $note.summernote('code',text);
               }
               if(options.cleaner.notTime>0){
@@ -113,8 +115,7 @@
             }else{
               var text=e.originalEvent.clipboardData.getData((options.cleaner.keepHtml?'text/html':'text/plain'));
             }
-  
-            if (text && text != '') {
+            if(text && text!=''){
               e.preventDefault();
               var text=cleanText(text,options.cleaner.newline);
               var pasteFn=function(){
