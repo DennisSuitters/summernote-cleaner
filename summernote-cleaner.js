@@ -76,7 +76,7 @@
             var out=txt.replace(sS,' ');
           }
           var nL=/(\n)+/g;
-          out=out.replace(nL,nlO);
+          var out=txt.replace(nL,nlO);
         }
         return out;
       };
