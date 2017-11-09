@@ -1,6 +1,8 @@
 # summernote-cleaner
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 
+[![Build Status](https://travis-ci.org/DiemenDesign/summernote-cleaner.svg?branch=master)](https://travis-ci.org/DiemenDesign/summernote-cleaner)
+
 summernote-cleaner removes the unnecessary and possibly layout breaking Crud that gets added by MSWord, Open Office, and Libre Office Documents.
 
 The plugin can function in a couple of different ways. It can have a Toolbar Button which allows the Cleaning of the Editor's Text, or Pasted Text can be Cleaned when Pasted into the Text Editor.
