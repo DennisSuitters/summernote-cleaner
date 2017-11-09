@@ -54,9 +54,8 @@
           out = out.replace(tS, '');
           var bT = options.cleaner.badTags;
           for (var i = 0; i < bT.length; i++) {
-            tS = new RegExp('<' + bT[i] + '[^>]*>', 'gi');
-            out = out.replace(tS, '');
-            tS = new RegExp('</' + bT[i] + '[^>]*>', 'gi');
+            // suggestion by @LoloDf at #40
+            tS=new RegExp('<'+bT[i]+'\\b.*>.*</'+bT[i]+'>','gi');
             out = out.replace(tS, '');
           }
           var allowedTags = options.cleaner.keepOnlyTags;
