@@ -3,7 +3,7 @@
   if(typeof define === 'function' && define.amd) {
     define(['jquery'], factory);
   } else if (typeof module === 'object' && module.exports) {
-    module.exports=factory(require('jquery'));
+    module.exports = factory(require('jquery'));
   } else {
     factory(window.jQuery);
   }
@@ -27,8 +27,8 @@
       keepHtml: true, //Remove all Html formats
       keepOnlyTags: [], // If keepHtml is true, remove all tags except these
       keepClasses: false, //Remove Classes
-      badTags: ['style','script','applet','embed','noframes','noscript','html'], //Remove full tags with contents
-      badAttributes: ['style','start'] //Remove attributes from remaining tags
+      badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], //Remove full tags with contents
+      badAttributes: ['style', 'start'] //Remove attributes from remaining tags
     }
   });
   $.extend($.summernote.plugins, {
@@ -39,19 +39,19 @@
       var $editor = context.layoutInfo.editor;
       var options = context.options;
       var lang = options.langInfo;
-      var cleanText = function(txt,nlO) {
+      var cleanText = function(txt, nlO) {
         var out = txt;
         if (!options.cleaner.keepClasses) {
           var sS = /(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g;
           out = txt.replace(sS, ' ');
         }
         var nL = /(\n)+/g;
-        out = out.replace(nL,nlO);
+        out = out.replace(nL, nlO);
         if (options.cleaner.keepHtml) {
           var cS = new RegExp('<!--(.*?)-->', 'gi');
           out = out.replace(cS, '');
           var tS = new RegExp('<(/)*(meta|link|\\?xml:|st1:|o:|font)(.*?)>', 'gi');
-          out = out.replace(tS,'');
+          out = out.replace(tS, '');
           var bT = options.cleaner.badTags;
           for (var i = 0; i < bT.length; i++) {
             tS = new RegExp('<' + bT[i] + '[^>]*>', 'gi');
@@ -64,7 +64,7 @@
             allowedTags = [];
           if (allowedTags.length > 0) {
             allowedTags = (((allowedTags||'') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('');
-            var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi
+            var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
             out = out.replace(tags,function($0, $1) {
               return allowedTags.indexOf('<' + $1.toLowerCase()+'>') > -1 ? $0 : ''
             });
@@ -73,7 +73,7 @@
           for (var ii = 0; ii < bA.length; ii++ ) {
             //var aS=new RegExp(' ('+bA[ii]+'="(.*?)")|('+bA[ii]+'=\'(.*?)\')','gi');
             var aS = new RegExp(' ' + bA[ii] + '=[\'|"](.*?)[\'|"]', 'gi');
-            out = out.replace(aS,'');
+            out = out.replace(aS, '');
           }
         }
         return out;
@@ -102,7 +102,7 @@
       }
       this.events = {
         'summernote.paste':function(we,e) {
-          if (options.cleaner.action=='both'||options.cleaner.action=='paste'){
+          if (options.cleaner.action=='both' || options.cleaner.action=='paste') {
             var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
             msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
@@ -124,7 +124,7 @@
               }
               if (options.cleaner.notTime > 0) {
                 $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="' + options.cleaner.notStyle + '">' + lang.cleaner.not + '</div>');
-                setTimeout(function(){$editor.find('.summernote-cleanerAlert').remove();},options.cleaner.notTime);
+                setTimeout(function(){$editor.find('.summernote-cleanerAlert').remove();}, options.cleaner.notTime);
               }
             }
           }
