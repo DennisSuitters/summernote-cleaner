@@ -105,6 +105,7 @@
             var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
             msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
+            var ffox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
             if (msie) {
               var text = window.clipboardData.getData("Text");
             } else {
@@ -116,7 +117,7 @@
               var pasteFn = function() {
                 $note.summernote('pasteHTML', text);
               }
-              if (msie) {
+              if (msie || ffox) {
                 setTimeout(pasteFn, 1);
               } else {
                 pasteFn();
