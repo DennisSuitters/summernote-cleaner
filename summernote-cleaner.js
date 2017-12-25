@@ -108,7 +108,7 @@
             $('.note-status-bar').prepend('<output class="note-status-output"></output>');
             $("head").append('<style>.note-editor.note-frame .note-statusbar .note-status-output{font-size:12px;height:25px}.note-editor.note-frame .note-statusbar .note-status-output .alert{margin:-7px 0 0 0;padding:2px 10px;border:1px solid transparent;border-radius:0}.note-editor.note-frame .note-statusbar .note-status-output .alert .note-icon{margin-right:5px}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-success{color:#3c763d;background-color:#dff0d8;border-color:#d6e9c6}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}</style>');
           }
-          if(options.cleaner.limitChars != 0 || options.cleaner.limitChars != false || options.cleaner.limitDisplay != 'none') {
+          if(options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none') {
             var textLength = $(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
             var codeLength = $('.note-editable').html();
             var lengthStatus = '';
@@ -116,11 +116,11 @@
             if (options.cleaner.limitDisplay == 'text' || options.cleaner.limitDisplay == 'both') lengthStatus += 'Text: ' + textLength.length;
             if (options.cleaner.limitDisplay == 'both') lengthStatus += ' / ';
             if (options.cleaner.limitDisplay == 'html' || options.cleaner.limitDisplay == 'both') lengthStatus += 'HTML: ' + codeLength.length;
-            $('.note-status-output').html('<small class="pull-right ' + lengthStatus + '</small>');
+            $('.note-status-output').html('<small class="pull-right ' + lengthStatus + '&nbsp;</small>');
           }
         },
         'summernote.keydown': function (we,e) {
-          if(options.cleaner.limitChars != 0 || options.cleaner.limitChars != false && options.cleaner.limitDisplay != 'none') {
+          if(options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none') {
             var textLength = $(".note-editable").text();
             var codeLength = $('.note-editable').html();
             var lengthStatus = '';
@@ -140,7 +140,7 @@
               if (options.cleaner.limitDisplay == 'text' || options.cleaner.limitDisplay == 'both') lengthStatus += 'Text: ' + textLength.length;
               if (options.cleaner.limitDisplay == 'both') lengthStatus += ' / ';
               if (options.cleaner.limitDisplay == 'html' || options.cleaner.limitDisplay == 'both') lengthStatus += 'HTML: ' + codeLength.length;
-              $('.note-status-output').html('<small class="cleanerLimit pull-right ' + lengthStatus + '</small>');
+              $('.note-status-output').html('<small class="cleanerLimit pull-right ' + lengthStatus + '&nbsp;</small>');
             }
           }
         },
