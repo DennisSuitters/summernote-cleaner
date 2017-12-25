@@ -153,6 +153,7 @@
         },
         'summernote.paste':function (we, e) {
           if (options.cleaner.action=='both' || options.cleaner.action=='paste') {
+            e.preventDefault();
             var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
             msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
@@ -160,18 +161,13 @@
             if (msie) {
               var text = window.clipboardData.getData("Text");
             } else {
-              var text = e.originalEvent.clipboardData.getData((options.cleaner.keepHtml ? 'text/html' : 'text/plain'));
+              var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'Text' : 'text/plain');
             }
-            if (text && text != '') {
-              e.preventDefault();
-              var text=cleanText(text, options.cleaner.newline);
-              var pasteFn = function () {
-                $note.summernote('pasteHTML', text);
-              }
+            if (text) {
               if (msie || ffox) {
-                setTimeout(pasteFn, 1);
+                setTimeout($note.summernote('pasteHTML', cleanText(text, options.cleaner.newline)), 1);
               } else {
-                pasteFn();
+                $note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));
               }
               if ($('.note-status-output').length > 0) {
                 $('.note-status-output').html('<div class="summernote-cleanerAlert alert alert-success">' + lang.cleaner.not + '</div>');
