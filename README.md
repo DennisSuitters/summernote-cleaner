@@ -5,6 +5,8 @@ summernote-cleaner removes the unnecessary and possibly layout breaking Crud tha
 
 The plugin can function in a couple of different ways. It can have a Toolbar Button which allows the Cleaning of the Editor's Text, or Pasted Text can be Cleaned when Pasted into the Text Editor.
 
+The plugin can also limit the number of characters, with options to display text and/or HTML count in the status bar area.
+
 ### Installation
 
 #### 1. Include JS
@@ -37,7 +39,6 @@ $('.summernote').summernote({
         ['help',['help']]
     ],
     cleaner:{
-          notTime: 2400, // Time to display Notifications.
           action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
           newline: '<br>', // Summernote's default is to use '<p><br></p>'
           notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
@@ -47,6 +48,9 @@ $('.summernote').summernote({
           keepClasses: false, // Remove Classes
           badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
           badAttributes: ['style', 'start'] // Remove attributes from remaining tags
+          limitChars: false, // 0/false|# 0/false disables option
+          limitDisplay: 'both', // text|html|both
+          limitStop: false // true/false
     }
 });
 ```

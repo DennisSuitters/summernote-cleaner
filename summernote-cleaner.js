@@ -19,7 +19,6 @@
   });
   $.extend($.summernote.options, {
     cleaner: {
-      notTime: 2400, // Time to display Notifications.
       action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
       newline: '<br>', // Summernote's default is to use '<p><br></p>'
       notStyle: 'position:absolute;top:0;left:0;right:0',
@@ -28,7 +27,10 @@
       keepOnlyTags: [], // If keepHtml is true, remove all tags except these
       keepClasses: false, //Remove Classes
       badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], //Remove full tags with contents
-      badAttributes: ['style', 'start'] //Remove attributes from remaining tags
+      badAttributes: ['style', 'start'], //Remove attributes from remaining tags
+      limitChars: 0, // 0|# 0 disables option
+      limitDisplay: 'both', // none|text|html|both
+      limitStop: false // true/false
     }
   });
   $.extend($.summernote.plugins, {
@@ -90,17 +92,59 @@
                 var text = cleanText($note.summernote('code'));
                 $note.summernote('code', text);
               }
-              if (options.cleaner.notTime > 0) {
-                $editor.find('.note-editing-area').append('<div class="summernote-cleanerAlert alert alert-success" style="' + options.cleaner.notStyle + '">' + lang.cleaner.not + '</div>');
-                setTimeout(function(){$editor.find('.summernote-cleanerAlert').remove();},options.cleaner.notTime);
-              }
+                if($('.note-status-output').length > 0){
+                    $('.note-status-output').html('<div class="summernote-cleanerAlert alert alert-success">' + lang.cleaner.not + '</div>');
+                } else {
+                  $editor.find('.note-editing-area').append('<div class="summernote-cleanerAlert alert alert-success" style="' + options.cleaner.notStyle + '">' + lang.cleaner.not + '</div>');
+                }
             }
           });
           return button.render();
         });
       }
       this.events = {
-        'summernote.paste':function(we,e) {
+        'summernote.init': function () {
+          if($('.note-status-output').length < 1) {
+            $('.note-status-bar').prepend('<output class="note-status-output"></output>');
+            $("head").append('<style>.note-editor.note-frame .note-statusbar .note-status-output{font-size:12px;height:25px}.note-editor.note-frame .note-statusbar .note-status-output .alert{margin:-7px 0 0 0;padding:2px 10px;border:1px solid transparent;border-radius:0}.note-editor.note-frame .note-statusbar .note-status-output .alert .note-icon{margin-right:5px}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-success{color:#3c763d;background-color:#dff0d8;border-color:#d6e9c6}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}</style>');
+          }
+          if(options.cleaner.limitChars != 0 || options.cleaner.limitChars != false || options.cleaner.limitDisplay != 'none') {
+            var textLength = $(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
+            var codeLength = $('.note-editable').html();
+            var lengthStatus = '';
+            if (textLength.length > options.cleaner.limitChars && options.cleaner.limitChars > 0) lengthStatus += 'text-danger">'; else lengthStatus += 'text-muted">';
+            if (options.cleaner.limitDisplay == 'text' || options.cleaner.limitDisplay == 'both') lengthStatus += 'Text: ' + textLength.length;
+            if (options.cleaner.limitDisplay == 'both') lengthStatus += ' / ';
+            if (options.cleaner.limitDisplay == 'html' || options.cleaner.limitDisplay == 'both') lengthStatus += 'HTML: ' + codeLength.length;
+            $('.note-status-output').html('<small class="pull-right ' + lengthStatus + '</small>');
+          }
+        },
+        'summernote.keydown': function (we,e) {
+          if(options.cleaner.limitChars != 0 || options.cleaner.limitChars != false && options.cleaner.limitDisplay != 'none') {
+            var textLength = $(".note-editable").text();
+            var codeLength = $('.note-editable').html();
+            var lengthStatus = '';
+            if(options.cleaner.limitStop == true && textLength.length >= options.cleaner.limitChars) {
+              var key = e.keyCode;
+              allowed_keys = [8, 37, 38, 39, 40, 46]
+              if($.inArray(key, allowed_keys) != -1) {
+                $('.cleanerLimit').removeClass('text-danger');
+                return true;
+              } else {
+                $('.cleanerLimit').addClass('text-danger');
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            } else {
+              if (textLength.length > options.cleaner.limitChars && options.cleaner.limitChars > 0) lengthStatus += 'text-danger">'; else lengthStatus += 'text-muted">';
+              if (options.cleaner.limitDisplay == 'text' || options.cleaner.limitDisplay == 'both') lengthStatus += 'Text: ' + textLength.length;
+              if (options.cleaner.limitDisplay == 'both') lengthStatus += ' / ';
+              if (options.cleaner.limitDisplay == 'html' || options.cleaner.limitDisplay == 'both') lengthStatus += 'HTML: ' + codeLength.length;
+              $('.note-status-output').html('<small class="cleanerLimit pull-right ' + lengthStatus + '</small>');
+            }
+          }
+        },
+        'summernote.paste': function (we, e) {
           if (options.cleaner.action=='both' || options.cleaner.action=='paste') {
             var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
@@ -122,10 +166,11 @@
               } else {
                 pasteFn();
               }
-              if (options.cleaner.notTime > 0) {
-                $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="' + options.cleaner.notStyle + '">' + lang.cleaner.not + '</div>');
-                setTimeout(function(){$editor.find('.summernote-cleanerAlert').remove();}, options.cleaner.notTime);
-              }
+                if($('.note-status-output').length > 0){
+                    $('.note-status-output').html('<div class="summernote-cleanerAlert alert alert-success">' + lang.cleaner.not + '</div>');
+                } else {
+                  $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="' + options.cleaner.notStyle + '">' + lang.cleaner.not + '</div>');
+                }
             }
           }
         }
