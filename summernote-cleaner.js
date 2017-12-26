@@ -47,26 +47,26 @@
         var out = txt;
         if (!options.cleaner.keepClasses) {
           var sS = /(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g;
-          out = txt.replace(sS, ' ');
+             out = txt.replace(sS, ' ');
         }
         var nL = /(\n)+/g;
-        out = out.replace(nL, nlO);
+           out = out.replace(nL, nlO);
         if (options.cleaner.keepHtml) {
           var cS = new RegExp('<!--(.*?)-->', 'gi');
-          out = out.replace(cS, '');
+             out = out.replace(cS, '');
           var tS = new RegExp('<(/)*(meta|link|\\?xml:|st1:|o:|font)(.*?)>', 'gi');
-          out = out.replace(tS, '');
+             out = out.replace(tS, '');
           var bT = options.cleaner.badTags;
           for (var i = 0; i < bT.length; i++) {
-            tS=new RegExp('<' + bT[i] + '\\b.*>.*</' + bT[i] + '>', 'gi');
+            tS = new RegExp('<' + bT[i] + '\\b.*>.*</' + bT[i] + '>', 'gi');
             out = out.replace(tS, '');
           }
           var allowedTags = options.cleaner.keepOnlyTags;
           if (typeof(allowedTags) == "undefined") allowedTags = [];
           if (allowedTags.length > 0) {
             allowedTags = (((allowedTags||'') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('');
-            var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
-            out = out.replace(tags, function($0, $1) {
+               var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+                    out = out.replace(tags, function($0, $1) {
               return allowedTags.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''
             });
           }
@@ -74,7 +74,7 @@
           for (var ii = 0; ii < bA.length; ii++ ) {
             //var aS=new RegExp(' ('+bA[ii]+'="(.*?)")|('+bA[ii]+'=\'(.*?)\')', 'gi');
             var aS = new RegExp(' ' + bA[ii] + '=[\'|"](.*?)[\'|"]', 'gi');
-            out = out.replace(aS, '');
+               out = out.replace(aS, '');
           }
         }
         return out;
@@ -85,13 +85,10 @@
             contents: options.cleaner.icon,
             tooltip: lang.cleaner.tooltip,
             click:function () {
-              if ($note.summernote('createRange').toString()) {
-//                var text = $note.summernote('createRange').toString();
+              if ($note.summernote('createRange').toString())
                 $note.summernote('pasteHTML', $note.summernote('createRange').toString());
-              } else {
-//                var text = cleanText($note.summernote('code'));
+              else
                 $note.summernote('code', cleanText($note.summernote('code')));
-              }
               if ($('.note-status-output').length > 0)
                 $('.note-status-output').html('<div class="alert alert-success">' + lang.cleaner.not + '</div>');
               else
@@ -102,19 +99,19 @@
         });
       }
       this.events = {
-        'summernote.init':function () {
+        'summernote.init':function () { 
           if ($('.note-status-output').length < 1) {
-            $('.note-status-bar').prepend('<output class="note-status-output"></output>');
-            $("head").append('<style>.note-editor.note-frame .note-statusbar .note-status-output{font-size:12px;height:25px}.note-editor.note-frame .note-statusbar .note-status-output .alert{margin:-7px 0 0 0;padding:2px 10px;border:1px solid transparent;border-radius:0}.note-editor.note-frame .note-statusbar .note-status-output .alert .note-icon{margin-right:5px}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-success{color:#3c763d;background-color:#dff0d8;border-color:#d6e9c6}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.note-editor.note-frame .note-statusbar .note-status-output .alert .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}</style>');
+            $('.note-statusbar').prepend('<output class="note-status-output"></output>');
+            $("head").append('<style>.note-statusbar .note-status-output{display:block;padding-top:7px;width:100%;font-size:14px;line-height:1.42857143;height:25px;color:#000}.note-statusbar .pull-right{float:right!important}.note-statusbar .note-status-output .text-muted{color:#777}.note-statusbar .note-status-output .text-primary{color:#286090}.note-statusbar .note-status-output .text-success{color:#3c763d}.note-statusbar .note-status-output .text-info{color:#31708f}.note-statusbar .note-status-output .text-warning{color:#8a6d3b}.note-statusbar .note-status-output .text-danger{color:#a94442}.note-statusbar .alert{margin:-7px 0 0 0;padding:2px 10px;border:1px solid transparent;border-radius:0}.note-statusbar .alert .note-icon{margin-right:5px}.note-statusbar .alert-success{color:#3c763d!important;background-color: #dff0d8 !important;border-color:#d6e9c6}.note-statusbar .alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}.note-statusbar .alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.note-statusbar .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}</style>');
           }
           if (options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none') {
-            var textLength = $(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
-            var codeLength = $('.note-editable').html();
+              var textLength = $(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
+              var codeLength = $('.note-editable').html();
             var lengthStatus = '';
             if (textLength.length > options.cleaner.limitChars && options.cleaner.limitChars > 0)
               lengthStatus += 'text-danger">';
             else
-              lengthStatus += 'text-muted">';
+              lengthStatus += '">';
             if (options.cleaner.limitDisplay == 'text' || options.cleaner.limitDisplay == 'both') lengthStatus += lang.cleaner.limitText + ': ' + textLength.length;
             if (options.cleaner.limitDisplay == 'both') lengthStatus += ' / ';
             if (options.cleaner.limitDisplay == 'html' || options.cleaner.limitDisplay == 'both') lengthStatus += lang.cleaner.limitHTML + ': ' + codeLength.length;
@@ -123,11 +120,11 @@
         },
         'summernote.keydown':function (we, e) {
           if (options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none') {
-            var textLength = $(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
-            var codeLength = $('.note-editable').html();
+              var textLength = $(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
+              var codeLength = $('.note-editable').html();
             var lengthStatus = '';
             if (options.cleaner.limitStop == true && textLength.length >= options.cleaner.limitChars) {
-              var key = e.keyCode;
+                   var key = e.keyCode;
               allowed_keys = [8, 37, 38, 39, 40, 46]
               if ($.inArray(key, allowed_keys) != -1) {
                 $('.cleanerLimit').removeClass('text-danger');
@@ -141,7 +138,7 @@
               if (textLength.length > options.cleaner.limitChars && options.cleaner.limitChars > 0)
                 lengthStatus += 'text-danger">';
               else
-                lengthStatus += 'text-muted">';
+                lengthStatus += '">';
               if (options.cleaner.limitDisplay == 'text' || options.cleaner.limitDisplay == 'both')
                 lengthStatus += lang.cleaner.limitText + ': ' + textLength.length;
               if (options.cleaner.limitDisplay == 'both')
@@ -155,9 +152,9 @@
         'summernote.paste':function (we, e) {
           if (options.cleaner.action == 'both' || options.cleaner.action == 'paste') {
             e.preventDefault();
-            var ua = window.navigator.userAgent;
+              var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
-            msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
+                msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
             var ffox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
             if (msie)
               var text = window.clipboardData.getData("Text");
