@@ -84,6 +84,7 @@
           var button = ui.button({
             contents: options.cleaner.icon,
             tooltip: lang.cleaner.tooltip,
+            container: 'body',
             click:function () {
               if ($note.summernote('createRange').toString())
                 $note.summernote('pasteHTML', $note.summernote('createRange').toString());
