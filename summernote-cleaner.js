@@ -101,12 +101,12 @@
       this.events = {
         'summernote.init':function () { 
           if ($editor.find('.note-status-output').length < 1) {
-            $('.note-statusbar').prepend('<output class="note-status-output"></output>');
+            $editor.find('.note-statusbar').prepend('<output class="note-status-output"></output>');
             $("head").append('<style>.note-statusbar .note-status-output{display:block;padding-top:7px;width:100%;font-size:14px;line-height:1.42857143;height:25px;color:#000}.note-statusbar .pull-right{float:right!important}.note-statusbar .note-status-output .text-muted{color:#777}.note-statusbar .note-status-output .text-primary{color:#286090}.note-statusbar .note-status-output .text-success{color:#3c763d}.note-statusbar .note-status-output .text-info{color:#31708f}.note-statusbar .note-status-output .text-warning{color:#8a6d3b}.note-statusbar .note-status-output .text-danger{color:#a94442}.note-statusbar .alert{margin:-7px 0 0 0;padding:2px 10px;border:1px solid transparent;border-radius:0}.note-statusbar .alert .note-icon{margin-right:5px}.note-statusbar .alert-success{color:#3c763d!important;background-color: #dff0d8 !important;border-color:#d6e9c6}.note-statusbar .alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}.note-statusbar .alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.note-statusbar .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}</style>');
           }
           if (options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none') {
-              var textLength = $(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
-              var codeLength = $('.note-editable').html();
+              var textLength = $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
+              var codeLength = $editor.find('.note-editable').html();
             var lengthStatus = '';
             if (textLength.length > options.cleaner.limitChars && options.cleaner.limitChars > 0)
               lengthStatus += 'text-danger">';
@@ -120,17 +120,17 @@
         },
         'summernote.keydown':function (we, e) {
           if (options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none') {
-              var textLength = $(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
-              var codeLength = $('.note-editable').html();
+              var textLength =  $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
+              var codeLength =  $editor.find('.note-editable').html();
             var lengthStatus = '';
             if (options.cleaner.limitStop == true && textLength.length >= options.cleaner.limitChars) {
                    var key = e.keyCode;
               allowed_keys = [8, 37, 38, 39, 40, 46]
               if ($.inArray(key, allowed_keys) != -1) {
-                $('.cleanerLimit').removeClass('text-danger');
+                $editor.find('.cleanerLimit').removeClass('text-danger');
                 return true;
               } else {
-                $('.cleanerLimit').addClass('text-danger');
+                $editor.find('.cleanerLimit').addClass('text-danger');
                 e.preventDefault();
                 e.stopPropagation();
               }
