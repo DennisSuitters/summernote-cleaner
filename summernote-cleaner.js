@@ -10,14 +10,15 @@
       
       //  icon: '<i class="note-icon">[Clean]</i>',
         keepHtml: true, // Remove all Html formats
-        keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
+        keepOnlyTags: ['<p>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
         keepClasses: false, // Remove Classes
         badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
         badAttributes: ['style', 'start'], // Remove attributes from remaining tags
         limitChars: false, // 0/false|# 0/false disables option
         limitDisplay: 'both', // text|html|both
         limitStop: false, // true|false
-        webify: true // true | false
+        webify: true, // true | false
+        replaceLineEndings: true // true | false
     }
   });
   $.extend(true, $.summernote.lang, {
@@ -41,8 +42,11 @@
       var cleanText = function (txt, nlO) {
       
         var out = txt;
-        var nL = /(\n|\r)/g;
-           out = out.replace(nL, nlO);
+        
+        if (options.cleaner.replaceLineEndings) {
+          var nL = /(\n|\r)/g;
+             out = out.replace(nL, nlO);
+        } 
         if (!options.cleaner.keepClasses) {
           var sS = /( class=(")?Mso[a-zA-Z]+(")?)/g;
              out = out.replace(sS, ' ');
@@ -74,7 +78,6 @@
           }
         }
         
-        alert(options.cleaner.webify);
          if (options.cleaner.webify){
            out = out
                   .replace(/[\u2018\u2019]/g, "'")
