@@ -1,14 +1,25 @@
-/* https://github.com/DiemenDesign/summernote-cleaner */
-(function (factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(['jquery'], factory);
-  } else if (typeof module === 'object' && module.exports) {
-    module.exports = factory(require('jquery'));
-  } else {
-    factory(window.jQuery);
-  }
-}
 (function ($) {
+
+
+  $.extend($.summernote.options, {
+    cleaner: {
+      action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+      newline: '<br>', // Summernote's default is to use '<p><br></p>'
+      notStyle: 'position:absolute;top:0;left:0;right:0',
+      icon: '<i class="note-icon"><svg xmlns="http://www.w3.org/2000/svg" id="libre-paintbrush" viewBox="0 0 14 14" width="14" height="14"><path d="m 11.821425,1 q 0.46875,0 0.82031,0.311384 0.35157,0.311384 0.35157,0.780134 0,0.421875 -0.30134,1.01116 -2.22322,4.212054 -3.11384,5.035715 -0.64956,0.609375 -1.45982,0.609375 -0.84375,0 -1.44978,-0.61942 -0.60603,-0.61942 -0.60603,-1.469866 0,-0.857143 0.61608,-1.419643 l 4.27232,-3.877232 Q 11.345985,1 11.821425,1 z m -6.08705,6.924107 q 0.26116,0.508928 0.71317,0.870536 0.45201,0.361607 1.00781,0.508928 l 0.007,0.475447 q 0.0268,1.426339 -0.86719,2.32366 Q 5.700895,13 4.261155,13 q -0.82366,0 -1.45982,-0.311384 -0.63616,-0.311384 -1.0212,-0.853795 -0.38505,-0.54241 -0.57924,-1.225446 -0.1942,-0.683036 -0.1942,-1.473214 0.0469,0.03348 0.27455,0.200893 0.22768,0.16741 0.41518,0.29799 0.1875,0.130581 0.39509,0.24442 0.20759,0.113839 0.30804,0.113839 0.27455,0 0.3683,-0.247767 0.16741,-0.441965 0.38505,-0.753349 0.21763,-0.311383 0.4654,-0.508928 0.24776,-0.197545 0.58928,-0.31808 0.34152,-0.120536 0.68974,-0.170759 0.34821,-0.05022 0.83705,-0.07031 z"/></svg></i>',
+      
+      //  icon: '<i class="note-icon">[Clean]</i>',
+        keepHtml: true, // Remove all Html formats
+        keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
+        keepClasses: false, // Remove Classes
+        badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
+        badAttributes: ['style', 'start'], // Remove attributes from remaining tags
+        limitChars: false, // 0/false|# 0/false disables option
+        limitDisplay: 'both', // text|html|both
+        limitStop: false, // true|false
+        webify: true // true | false
+    }
+  });
   $.extend(true, $.summernote.lang, {
     'en-US': {
       cleaner: {
@@ -17,22 +28,6 @@
         limitText: 'Text',
         limitHTML: 'HTML'
       }
-    }
-  });
-  $.extend($.summernote.options, {
-    cleaner: {
-      action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
-      newline: '<br>', // Summernote's default is to use '<p><br></p>'
-      notStyle: 'position:absolute;top:0;left:0;right:0',
-      icon: '<i class="note-icon"><svg xmlns="http://www.w3.org/2000/svg" id="libre-paintbrush" viewBox="0 0 14 14" width="14" height="14"><path d="m 11.821425,1 q 0.46875,0 0.82031,0.311384 0.35157,0.311384 0.35157,0.780134 0,0.421875 -0.30134,1.01116 -2.22322,4.212054 -3.11384,5.035715 -0.64956,0.609375 -1.45982,0.609375 -0.84375,0 -1.44978,-0.61942 -0.60603,-0.61942 -0.60603,-1.469866 0,-0.857143 0.61608,-1.419643 l 4.27232,-3.877232 Q 11.345985,1 11.821425,1 z m -6.08705,6.924107 q 0.26116,0.508928 0.71317,0.870536 0.45201,0.361607 1.00781,0.508928 l 0.007,0.475447 q 0.0268,1.426339 -0.86719,2.32366 Q 5.700895,13 4.261155,13 q -0.82366,0 -1.45982,-0.311384 -0.63616,-0.311384 -1.0212,-0.853795 -0.38505,-0.54241 -0.57924,-1.225446 -0.1942,-0.683036 -0.1942,-1.473214 0.0469,0.03348 0.27455,0.200893 0.22768,0.16741 0.41518,0.29799 0.1875,0.130581 0.39509,0.24442 0.20759,0.113839 0.30804,0.113839 0.27455,0 0.3683,-0.247767 0.16741,-0.441965 0.38505,-0.753349 0.21763,-0.311383 0.4654,-0.508928 0.24776,-0.197545 0.58928,-0.31808 0.34152,-0.120536 0.68974,-0.170759 0.34821,-0.05022 0.83705,-0.07031 z"/></svg></i>',
-      keepHtml: true, //Remove all Html formats
-      keepOnlyTags: [], // If keepHtml is true, remove all tags except these
-      keepClasses: false, //Remove Classes
-      badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], //Remove full tags with contents
-      badAttributes: ['style', 'start'], //Remove attributes from remaining tags
-      limitChars: 520, // 0|# 0 disables option
-      limitDisplay: 'both', // none|text|html|both
-      limitStop: false // true/false
     }
   });
   $.extend($.summernote.plugins, {
@@ -44,13 +39,14 @@
        options = context.options,
           lang = options.langInfo;
       var cleanText = function (txt, nlO) {
+      
         var out = txt;
-        if (!options.cleaner.keepClasses) {
-          var sS = /(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g;
-             out = txt.replace(sS, ' ');
-        }
-        var nL = /(\n)+/g;
+        var nL = /(\n|\r)/g;
            out = out.replace(nL, nlO);
+        if (!options.cleaner.keepClasses) {
+          var sS = /( class=(")?Mso[a-zA-Z]+(")?)/g;
+             out = out.replace(sS, ' ');
+        }
         if (options.cleaner.keepHtml) {
           var cS = new RegExp('<!--(.*?)-->', 'gi');
              out = out.replace(cS, '');
@@ -77,6 +73,19 @@
                out = out.replace(aS, '');
           }
         }
+        
+        alert(options.cleaner.webify);
+         if (options.cleaner.webify){
+           out = out
+                  .replace(/[\u2018\u2019]/g, "'")
+                  .replace(/[\u201C\u201D]/g, '"')
+                  .replace(/[\u2013\u2014]/g, '-')
+                  .replace(/[\u2026]/g, '...')
+                  .replace(/\\\\/g, "")
+                  .replace(/\\'/g, "'")
+                  .replace(/\\"/g, "\"");
+         }       
+        
         return out;
       };
       if (options.cleaner.action == 'both' || options.cleaner.action == 'button') {
@@ -153,7 +162,7 @@
         'summernote.paste':function (we, e) {
           if (options.cleaner.action == 'both' || options.cleaner.action == 'paste') {
             e.preventDefault();
-              var ua = window.navigator.userAgent;
+            var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
                 msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
             var ffox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
