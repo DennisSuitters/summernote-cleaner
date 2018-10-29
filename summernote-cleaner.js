@@ -163,7 +163,7 @@
               var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'Text' : 'text/plain');
             if (text) {
               if (msie || ffox)
-                setTimeout($note.summernote('pasteHTML', cleanText(text, options.cleaner.newline)), 1);
+                setTimeout(function(){$note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));}, 1);
               else
                 $note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));
               if ($editor.find('.note-status-output').length > 0)
