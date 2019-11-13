@@ -76,13 +76,11 @@
             var aS = new RegExp(' ' + bA[ii] + '=[\'|"](.*?)[\'|"]', 'gi');
                out = out.replace(aS, '');
             
-               aS = new RegExp(" " + bA[ii] + "[=0-9a-z]", "gi");
-               out = out.replace(aS, "");
+               aS = new RegExp(' ' + bA[ii] + '[=0-9a-z]', 'gi');
+               out = out.replace(aS, '');
           }
         }
 
-        var sS = new RegExp("[ ]{1,}>", "gi");
-        out = out.replace(sS, ">");
         return out;
       };
       if (options.cleaner.action == 'both' || options.cleaner.action == 'button') {
