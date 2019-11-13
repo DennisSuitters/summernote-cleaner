@@ -166,7 +166,7 @@
                 msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
             var ffox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
             if (msie)
-              var text = window.clipboardData.getData("text/html");
+              var text = window.clipboardData.getData("Text");
             else
               var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'text/html' : 'text/plain');
             if (text) {
