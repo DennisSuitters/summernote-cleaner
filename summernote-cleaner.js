@@ -76,10 +76,8 @@
             var aS = new RegExp(' ' + bA[ii] + '=[\'|"](.*?)[\'|"]', 'gi');
                out = out.replace(aS, '');
             
-               aS = new RegExp(" " + bA[ii] + "=(.*?) ", "gi");
-               out = out.replace(aS, " ");
-               aS = new RegExp(" " + bA[ii] + "=(.*?)>", "gi");
-               out = out.replace(aS, ">");
+               aS = new RegExp(" " + bA[ii] + "[=0-9a-z]", "gi");
+               out = out.replace(aS, "");
           }
         }
 
