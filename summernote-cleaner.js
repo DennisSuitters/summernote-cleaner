@@ -75,8 +75,16 @@
             //var aS=new RegExp(' ('+bA[ii]+'="(.*?)")|('+bA[ii]+'=\'(.*?)\')', 'gi');
             var aS = new RegExp(' ' + bA[ii] + '=[\'|"](.*?)[\'|"]', 'gi');
                out = out.replace(aS, '');
+            
+               aS = new RegExp(" " + bA[ii] + "=(.*?) ", "gi");
+               out = out.replace(aS, " ");
+               aS = new RegExp(" " + bA[ii] + "=(.*?)>", "gi");
+               out = out.replace(aS, ">");
           }
         }
+
+        var sS = new RegExp("[ ]{1,}>", "gi");
+        out = out.replace(sS, ">");
         return out;
       };
       if (options.cleaner.action == 'both' || options.cleaner.action == 'button') {
@@ -158,9 +166,9 @@
                 msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
             var ffox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
             if (msie)
-              var text = window.clipboardData.getData("Text");
+              var text = window.clipboardData.getData("text/html");
             else
-              var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'Text' : 'text/plain');
+              var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'text/html' : 'text/plain');
             if (text) {
               if (msie || ffox)
                 setTimeout(function(){$note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));}, 1);
