@@ -75,8 +75,12 @@
             //var aS=new RegExp(' ('+bA[ii]+'="(.*?)")|('+bA[ii]+'=\'(.*?)\')', 'gi');
             var aS = new RegExp(' ' + bA[ii] + '=[\'|"](.*?)[\'|"]', 'gi');
                out = out.replace(aS, '');
+            
+               aS = new RegExp(' ' + bA[ii] + '[=0-9a-z]', 'gi');
+               out = out.replace(aS, '');
           }
         }
+
         return out;
       };
       if (options.cleaner.action == 'both' || options.cleaner.action == 'button') {
@@ -160,7 +164,7 @@
             if (msie)
               var text = window.clipboardData.getData("Text");
             else
-              var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'Text' : 'text/plain');
+              var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'text/html' : 'text/plain');
             if (text) {
               if (msie || ffox)
                 setTimeout(function(){$note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));}, 1);
