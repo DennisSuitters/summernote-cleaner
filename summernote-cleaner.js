@@ -76,7 +76,7 @@
             var aS = new RegExp(' ' + bA[ii] + '=[\'|"](.*?)[\'|"]', 'gi');
                out = out.replace(aS, '');
             
-               aS = new RegExp(' ' + bA[ii] + '[=0-9a-z]', 'gi');
+               aS = new RegExp(' ' + bA[ii] + '=[0-9a-z]{1,}', 'gi');
                out = out.replace(aS, '');
           }
         }
