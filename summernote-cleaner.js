@@ -35,7 +35,7 @@
     }
   });
   $.extend($.summernote.plugins, {
-    'cleaner':function (context) {
+    'cleaner': function (context) {
       var self = this,
         ui = $.summernote.ui,
         $note = context.layoutInfo.note,
@@ -61,16 +61,16 @@
             out = out.replace(tS, '');
           }
           var allowedTags = options.cleaner.keepOnlyTags;
-          if (typeof(allowedTags) == "undefined") allowedTags = [];
+          if (typeof (allowedTags) == "undefined") allowedTags = [];
           if (allowedTags.length > 0) {
-            allowedTags = (((allowedTags||'') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('');
+            allowedTags = (((allowedTags || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('');
             var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
-            out = out.replace(tags, function($0, $1) {
+            out = out.replace(tags, function ($0, $1) {
               return allowedTags.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''
             });
           }
           var bA = options.cleaner.badAttributes;
-          for (var ii = 0; ii < bA.length; ii++ ) {
+          for (var ii = 0; ii < bA.length; ii++) {
             //var aS=new RegExp(' ('+bA[ii]+'="(.*?)")|('+bA[ii]+'=\'(.*?)\')', 'gi');
             var aS = new RegExp(' ' + bA[ii] + '=[\'|"](.*?)[\'|"]', 'gi');
             out = out.replace(aS, '');
@@ -88,7 +88,7 @@
             contents: options.cleaner.icon,
             tooltip: lang.cleaner.tooltip,
             container: 'body',
-            click:function () {
+            click: function () {
               if ($note.summernote('createRange').toString())
                 $note.summernote('pasteHTML', $note.summernote('createRange').toString());
               else
@@ -103,7 +103,7 @@
         });
       }
       this.events = {
-        'summernote.init':function () {
+        'summernote.init': function () {
           if ($editor.find('.note-status-output').length < 1) {
             $editor.find('.note-statusbar').prepend('<output class="note-status-output"></output>');
             $("head").append('<style>.note-statusbar .note-status-output{display:block;padding-top:7px;width:100%;font-size:14px;line-height:1.42857143;height:25px;color:#000}.note-statusbar .pull-right{float:right!important}.note-statusbar .note-status-output .text-muted{color:#777}.note-statusbar .note-status-output .text-primary{color:#286090}.note-statusbar .note-status-output .text-success{color:#3c763d}.note-statusbar .note-status-output .text-info{color:#31708f}.note-statusbar .note-status-output .text-warning{color:#8a6d3b}.note-statusbar .note-status-output .text-danger{color:#a94442}.note-statusbar .alert{margin:-7px 0 0 0;padding:2px 10px;border:1px solid transparent;border-radius:0}.note-statusbar .alert .note-icon{margin-right:5px}.note-statusbar .alert-success{color:#3c763d!important;background-color: #dff0d8 !important;border-color:#d6e9c6}.note-statusbar .alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}.note-statusbar .alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.note-statusbar .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}</style>');
@@ -122,10 +122,10 @@
             $editor.find('.note-status-output').html('<small class="pull-right ' + lengthStatus + '&nbsp;</small>');
           }
         },
-        'summernote.keydown':function (we, e) {
+        'summernote.keydown': function (we, e) {
           if (options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none') {
-            var textLength =  $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
-              var codeLength =  $editor.find('.note-editable').html();
+            var textLength = $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
+            var codeLength = $editor.find('.note-editable').html();
             var lengthStatus = '';
             if (options.cleaner.limitStop == true && textLength.length >= options.cleaner.limitChars) {
               var key = e.keyCode;
@@ -153,7 +153,7 @@
             }
           }
         },
-        'summernote.paste':function (we, e) {
+        'summernote.paste': function (we, e) {
           if (options.cleaner.action == 'both' || options.cleaner.action == 'paste') {
             e.preventDefault()
             e.stopPropagation()
@@ -163,14 +163,23 @@
             var msie = ua.indexOf("MSIE ");
             msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
             var ffox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-            if (msie)
-              var text = window.clipboardData.getData("Text");
-            else
-              var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'text/html' : 'text/plain');
-              if(!text) text = e.originalEvent.clipboardData.getData("Text");
+            if (msie) var text = window.clipboardData.getData("Text");
+            else var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'text/html' : 'text/plain');
+
+            if(text.indexOf('DOCTYPE') > -1) {
+              text = text.substring(text.indexOf('>') + 1, text.length)
+              if(text.indexOf('body') > -1) {
+                var body = text.match(/<body[^>]*>[\s\S]*<\/body>/gi)[0]
+                text = body.substring(body.indexOf('>') + 1, body.length)
+              }
+            }
+
+            if (!cleanText(text)) text = e.originalEvent.clipboardData.getData("Text");
             if (text) {
               if (msie || ffox)
-                setTimeout(function(){$note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));}, 1);
+                setTimeout(function () {
+                  $note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));
+                }, 1);
               else
                 $note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));
             }
