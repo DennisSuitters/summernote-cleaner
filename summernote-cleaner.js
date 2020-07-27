@@ -163,6 +163,25 @@
             var msie = ua.indexOf("MSIE ");
             msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
             var ffox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+
+            if (e.originalEvent.clipboardData.files) {
+              if (e.originalEvent.clipboardData.files[0]) {
+                var reader = new FileReader();
+                reader.onload=(function(aImg){
+
+                  if (msie || ffox)
+                    setTimeout(function () {
+                      $note.summernote('pasteHTML', `<img src="${aImg.target.result}" /`);
+                    }, 1);
+                  else
+                    $note.summernote('pasteHTML', `<div><img src="${aImg.target.result}" /></div>`);
+                })
+                reader.readAsDataURL(e.originalEvent.clipboardData.files[0]);
+                return
+              }
+            }
+
+
             if (msie) var text = window.clipboardData.getData("Text");
             else var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'text/html' : 'text/plain');
 
