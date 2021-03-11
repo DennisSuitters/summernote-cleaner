@@ -17,6 +17,14 @@
         limitText: 'Text',
         limitHTML: 'HTML'
       }
+    },
+    'de-DE': {
+      cleaner: {
+        tooltip: 'Cleaner',
+        not: 'Inhalt wurde bereinigt!',
+        limitText: 'Text',
+        limitHTML: 'HTML'
+      }
     }
   });
   $.extend($.summernote.options, {
@@ -155,8 +163,13 @@
             var ffox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
             if (msie)
               var text = window.clipboardData.getData("Text");
-            else
+            else {
               var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'text/html' : 'text/plain');
+              if(text === "") {
+                // Fallback to text/plain, in case the text/html returned nothing because the user only pasted Text
+                text = e.originalEvent.clipboardData.getData('text/plain');
+              }
+            }
             if (text) {
               if (msie || ffox)
                 setTimeout(function () {
