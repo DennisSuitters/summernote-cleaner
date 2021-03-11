@@ -57,7 +57,7 @@
              out = out.replace(tS, '');
           var bT = options.cleaner.badTags;
           for (var i = 0; i < bT.length; i++) {
-            tS = new RegExp('<' + bT[i] + '\\b.*>.*</' + bT[i] + '>', 'gi');
+            tS = new RegExp('<' + bT[i] + '.*>.*<\/' + bT[i] + '>', 'gi');
             out = out.replace(tS, '');
           }
           var allowedTags = options.cleaner.keepOnlyTags;
@@ -72,7 +72,7 @@
           var bA = options.cleaner.badAttributes;
           for (var ii = 0; ii < bA.length; ii++ ) {
             //var aS=new RegExp(' ('+bA[ii]+'="(.*?)")|('+bA[ii]+'=\'(.*?)\')', 'gi');
-            var aS = new RegExp(' ' + bA[ii] + '=[\'|"](.*?)[\'|"]', 'gi');
+            var aS = new RegExp(' ' + bA[ii] + '=(\'.* ?\'|".*?")', 'gi');
                out = out.replace(aS, '');
                aS = new RegExp(' ' + bA[ii] + '[=0-9a-z]', 'gi');
                out = out.replace(aS, '');
