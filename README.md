@@ -16,7 +16,7 @@ The plugin can also limit the number of characters, with options to display text
 Include the following code after Summernote:
 
 ```html
-<script src="summernote-cleaner.js"></script>
+<script src="/path/to/summernote-cleaner.js"></script>
 ```
 
 #### 2. Supported languages
@@ -60,7 +60,7 @@ $('.summernote').summernote({
 # Documentation
 
 
-**action:**
+`action:`
 
 Options: ( both | button | paste )
 
@@ -68,39 +68,39 @@ Options: ( both | button | paste )
  - paste = only clean when pasting content
  - both = does both options.
 
-**newline:**
+`newline:`
 
 Summernote's default is to use ```<p><br></p>```
 
-**keepHtml:**
+`keepHtml:`
 
  - true = Keep only tags listed in keepOnlyTags
  - false = Remove all Tags
 
-**keepOnlyTags:**
+`keepOnlyTags:`
 
 List of tags to keep if keepHTML set to true. Formatted with opening and closing brackets ```['<p>', '<ul>']```
 
-**keepClasses:**
+`keepClasses:`
 
  - true = keep all classes
  - false = remove all classes
 
-**badTags:**
+`badTags:`
 
 Remove full tags with contents. Tags listed by name only ```['style',  'script']```
 
-**badAttributes:**
+`badAttributes:`
 
 Remove attributes from tags. Attributes listed by name only ```['style',  'start']```
 
-**limitChars:**
+`limitChars:`
 
 Limits the number of characters in the summernote 
   - false or 0 = allows for max input
   - numbers > 0 = limit on number of characters
 
-**limitDisplay:**
+`limitDisplay:`
 
 Shows in the status area the total html & text characters
 Options: ( text | html | both )
@@ -108,7 +108,7 @@ Options: ( text | html | both )
  - html = html character count only
  - both = both html & text
 
-**limitStop:**
+`limitStop:`
 
 Limits the number of characters set by limitChars.
  - true = stops input 
