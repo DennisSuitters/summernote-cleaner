@@ -153,7 +153,7 @@
             if (text) {
               if (msie || ffox) {
                 setTimeout(function () {
-                  $note.summernote('pasteHTML', cleanPaste(text);
+                  $note.summernote('pasteHTML', cleanPaste(text));
                 }, 1);
               } else {
                 $note.summernote('pasteHTML', cleanPaste(text));
@@ -537,7 +537,7 @@ function pre_filter_linebreaks(html, markup) {
 * @description HTML Pre Filter
 * @return String
 */
-function post_filter_linebreaks: function(html, markup) {
+function post_filter_linebreaks(html, markup) {
   if (markup == 'xhtml') {
     html = html.replace(/<NOTE_BR>/g, '<br />');
   } else {
