@@ -237,7 +237,7 @@ function cleanPaste(html) {
     html = html.replace( /<([^\s>]+)[^>]*>\s*<\/\1>/g, '' ) ;
     //some RegEx code for the picky browsers
     var re = new RegExp("(<P)([^>]*>.*?)(<\/P>)","gi") ;
-    str = str.replace( re, "<div$2</div>" ) ;
+    html = html.replace( re, "<div$2</div>" ) ;
     var re2 = new RegExp("(<font|<FONT)([^*>]*>.*?)(<\/FONT>|<\/font>)","gi") ;
     html = html.replace( re2, "<div$2</div>") ;
     html = html.replace( /size|SIZE = ([\d]{1})/g, '' ) ;
@@ -261,11 +261,11 @@ function _cleanIncomingHTML(html) {
   //Put embed tags back in..
   html = html.replace(/<NOTE_EMBED([^>]*)>/gi, '<embed$1>');
   html = html.replace(/<\/NOTE_EMBED>/gi, '</embed>');
-  if (this.get('plainText')) {
+  //if (this.get('plainText')) {
     html = html.replace(/\n/g, '<br>').replace(/\r/g, '<br>');
     html = html.replace(/  /gi, '&nbsp;&nbsp;'); //Replace all double spaces
     html = html.replace(/\t/gi, '&nbsp;&nbsp;&nbsp;&nbsp;'); //Replace all tabs
-  }
+  //}
   //Removing Script Tags from the Editor
   html = html.replace(/<script([^>]*)>/gi, '<bad>');
   html = html.replace(/<\/script([^>]*)>/gi, '</bad>');
@@ -364,10 +364,10 @@ function cleanHTML(html) {
   html = html.replace(' &amp; ', 'NOTE_AMP');
   html = html.replace('&amp;', '&');
   html = html.replace('NOTE_AMP', '&amp;');
-  if (this.get('removeLineBreaks')) {
+  /*if (this.get('removeLineBreaks')) {
     html = html.replace(/\n/g, '').replace(/\r/g, '');
     html = html.replace(/  /gi, ' '); //Replace all double spaces and replace with a single
-  }
+  }*/
 //First empty span
   if (html.substring(0, 6).toLowerCase() == '<span>')  {
     html = html.substring(6);
@@ -468,7 +468,7 @@ function filter_internals(html) {
 function filter_all_rgb(str) {
   var exp = new RegExp("rgb\\s*?\\(\\s*?([0-9]+).*?,\\s*?([0-9]+).*?,\\s*?([0-9]+).*?\\)", "gi");
   var arr = str.match(exp);
-  if (Lang.isArray(arr)) {
+  if(Object.prototype.toString.call( arr ) === '[object Array]'){
     for (var i = 0; i < arr.length; i++) {
       var color = this.filter_rgb(arr[i]);
       str = str.replace(arr[i].toString(), color);
