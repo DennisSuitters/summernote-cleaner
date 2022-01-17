@@ -1,4 +1,4 @@
-# summernote-cleaner v1.0.0
+# summernote-cleaner v1.0.1
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 
 summernote-cleaner removes the unnecessary and possibly layout breaking Crud that gets added by MSWord, Open Office, and Libre Office Documents.
@@ -25,7 +25,7 @@ Currently available in English!
 
 ```javascript
 $('.summernote').summernote({
-    toolbar:[
+    toolbar: [
         ['cleaner',['cleaner']], // The Button
         ['style',['style']],
         ['font',['bold','italic','underline','clear']],
@@ -38,18 +38,18 @@ $('.summernote').summernote({
         ['view',['fullscreen','codeview']],
         ['help',['help']]
     ],
-    cleaner:{
+    cleaner: {
           action: 'both',
           newline: '<br>',
           icon: '<i class="note-icon">[Your Button]</i>',
-          keepHtml: false,
-          keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'],
+          keepHtml: true,
           keepClasses: false,
-          badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'],
-          badAttributes: ['style', 'start'],
+          badTags: ['applet', 'body', 'col', 'colgroup', 'embed', 'html', 'noframes', 'noscript', 'script', 'style', 'title'],
+          badAttributes: ['bgcolor', 'border', 'height', 'cellpadding', 'cellspacing', 'lang', 'start', 'style', 'valign', 'width'],
           limitChars: false,
           limitDisplay: 'both',
-          limitStop: false
+          limitStop: false,
+          imagePlaceholder: 'https://via.placeholder.com/200' // URL, or relative path to file.
     }
 });
 ```
@@ -58,23 +58,16 @@ $('.summernote').summernote({
 
 **action:**
 Options: ( both | button | paste )
- - button = only cleans via toolbar button
- - paste = only clean when pasting content
- - both = does both options.
+- button = Only cleans via toolbar button.
+- paste = Only cleans when pasting content.
+- both = Does both of the above options.
 
 **newline:**
 Summernote's default is to use `<p><br></p>`
 
 **keepHtml:**
- - true = Keep only tags listed in keepOnlyTags
- - false = Remove all Tags
-
-**keepOnlyTags:**
-List of tags to keep if keepHTML set to true. Formatted with opening and closing brackets `['<p>', '<ul>']`
-
-**keepClasses:**
- - true = keep all classes
- - false = remove all classes
+- true = Keeps HTML Markup and put through parser to remove Word Crud.
+- false = Removes tag elements using the text version of the pasted content from the clipboard.
 
 **badTags:**
 Remove full tags with contents. Tags listed by name only ['style',  'script']`
@@ -84,27 +77,36 @@ Remove attributes from tags. Attributes listed by name only `['style',  'start']
 
 **limitChars:**
 Limits the number of characters in the summernote
-  - false or 0 = allows for max input
-  - numbers > 0 = limit on number of characters
+- false or 0 = allows for max input
+- numbers > 0 = limit on number of characters
 
 **limitDisplay:**
 Shows in the status area the total html & text characters
 Options: ( text | html | both )
- - text = text character count only
- - html = html character count only
- - both = both html & text
+- text = text character count only
+- html = html character count only
+- both = both html & text
 
 **limitStop:**
 Limits the number of characters set by limitChars.
- - true = stops input
- - false = doesn't stop input
+- true = stops input
+- false = doesn't stop input
+
+**imagePlaceholder:**
+Replace pasted images with a nominated placeholder.
 
 # Thanks:
 - [wheelspin](https://github.com/wheelspin)
   - For adding Microsoft Browsers Support, and modifying the alert.
- - [Diemen Design](https://github.com/DiemenDesign/)
-   - Check out our other Summernote Plugins via our main Github page.
+- [Diemen Design](https://github.com/DiemenDesign/)
+  - Check out our other Summernote Plugins via our main Github page.
+
+# CHANGELOG:
+#### V1.0.1
+- Remove keepOnlyTags, and keepClasses, they were origially intended to be used, but refinement and other options have taken their place.
+- Reformat source looking for typos.
+- Replace Images with a nominated placeholder.
+- Replace `alt` attributes with `data-title` and `alt` used by Summernote.
 
 # TODO:
-- Fix parsing, for some reason Headers (H1-6) is being stripped out and replaced with paragraph and strong.
 - Implement Image conversion to base64, and hopefully automatic upload to destination folder.
