@@ -134,7 +134,7 @@
               /*only get the html data if its avaialble else use plain text*/
               if (options.cleaner.keepHtml && event.originalEvent.clipboardData.types.indexOf('text/html') > -1) {
                   dataType = 'text/html';
-                  isHtmlData = false;
+                  isHtmlData = true;
               }
               text = event.originalEvent.clipboardData.getData(dataType);
             }
