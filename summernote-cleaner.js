@@ -60,7 +60,7 @@
               if ($note.summernote('createRange').toString())
                 $note.summernote('pasteHTML', $note.summernote('createRange').toString());
               else
-                $note.summernote('code', cleanPaste($note.summernote('code'), options.cleaner.badTags, options.cleaner.badAttributes), true);
+                $note.summernote('code', cleanPaste($note.summernote('code'), options.cleaner.badTags, options.cleaner.badAttributes, options.cleaner.imagePlaceholder), true);
               if ($editor.find('.note-status-output').length > 0)
                 $editor.find('.note-status-output').html(lang.cleaner.not);
             }
@@ -141,19 +141,19 @@
             if (text) {
               if (msie || ffox) {
                 setTimeout(function () {
-                  $note.summernote('pasteHTML', cleanPaste(text, options.cleaner.badTags, options.cleaner.badAttributes, isHtmlData));
+                  $note.summernote('pasteHTML', cleanPaste(text, options.cleaner.badTags, options.cleaner.badAttributes, options.cleaner.imagePlaceholder, isHtmlData));
                 }, 1);
               } else
-                $note.summernote('pasteHTML', cleanPaste(text, options.cleaner.badTags, options.cleaner.badAttributes, isHtmlData));
+                $note.summernote('pasteHTML', cleanPaste(text, options.cleaner.badTags, options.cleaner.badAttributes, options.cleaner.imagePlaceholder, isHtmlData));
               if ($editor.find('.note-status-output').length > 0)
                 $editor.find('.note-status-output').html(lang.cleaner.not);
             }
           }
         }
       }
-      var cleanPaste = function(input, badTags, badAttributes, isHtmlData) {
+      var cleanPaste = function(input, badTags, badAttributes, imagePlaceholder, isHtmlData) {
         if(isHtmlData) {
-          return cleanHtmlPaste(input, badTags, badAttributes);
+          return cleanHtmlPaste(input, badTags, badAttributes, imagePlaceholder);
         } else {
           return cleanTextPaste(input);
         }
@@ -175,21 +175,21 @@
         return output;
       }
       
-      var cleanHtmlPaste = function(input, badTags, badAttributes) {
+      var cleanHtmlPaste = function(input, badTags, badAttributes, imagePlaceholder) {
         var stringStripper = /(\n|\r| class=(")?Mso[a-zA-Z]+(")? ^p)/g;
         var output = input.replace(stringStripper, '');
         var commentSripper = new RegExp('<!--(.*?)-->', 'g');
         var output = output.replace(commentSripper, '');
         var tagStripper = new RegExp('<(/)*(meta|link|span|\\?xml:|st1:|o:|font)(.*?)>', 'gi');
-        output = output.replace(/ src="(.*?)"/gi, ' src="' + options.cleaner.imagePlaceholder + '"');
+        output = output.replace(/ src="(.*?)"/gi, ' src="' + imagePlaceholder + '"');
         output = output.replace(/ name="(.*?)"/gi, ' data-title="$1" alt="$1"');
         output = output.replace(tagStripper, '');
-        for (var i = 0; i < options.cleaner.badTags.length; i++) {
-          tagStripper = new RegExp('<' + options.cleaner.badTags[i] + '.*?' + options.cleaner.badTags[i] + '(.*?)>', 'gi');
+        for (var i = 0; i < badTags.length; i++) {
+          tagStripper = new RegExp('<' + badTags[i] + '.*?' + badTags[i] + '(.*?)>', 'gi');
           output = output.replace(tagStripper, '');
         }
-        for (var i = 0; i < options.cleaner.badAttributes.length; i++) {
-          var attributeStripper = new RegExp(options.cleaner.badAttributes[i] + '="(.*?)"', 'gi');
+        for (var i = 0; i < badAttributes.length; i++) {
+          var attributeStripper = new RegExp(badAttributes[i] + '="(.*?)"', 'gi');
           output = output.replace(attributeStripper, '');
         }
         output = output.replace(/ align="(.*?)"/gi, ' class="text-$1"');

@@ -40,10 +40,8 @@ $('.summernote').summernote({
     ],
     cleaner: {
           action: 'both',
-          newline: '<br>',
           icon: '<i class="note-icon">[Your Button]</i>',
           keepHtml: true,
-          keepClasses: false,
           badTags: ['applet', 'body', 'col', 'colgroup', 'embed', 'html', 'noframes', 'noscript', 'script', 'style', 'title'],
           badAttributes: ['bgcolor', 'border', 'height', 'cellpadding', 'cellspacing', 'lang', 'start', 'style', 'valign', 'width'],
           limitChars: false,
@@ -61,9 +59,6 @@ Options: ( both | button | paste )
 - button = Only cleans via toolbar button.
 - paste = Only cleans when pasting content.
 - both = Does both of the above options.
-
-**newline:**
-Summernote's default is to use `<p><br></p>`
 
 **keepHtml:**
 - true = Keeps HTML Markup and put through parser to remove Word Crud.
@@ -102,6 +97,10 @@ Replace pasted images with a nominated placeholder.
   - Check out our other Summernote Plugins via our main Github page.
 
 # CHANGELOG:
+#### v1.0.2
+- Resolved paste plain text with keepHtml enabled bug
+- Code cleanup
+
 #### V1.0.1
 - Remove keepOnlyTags, and keepClasses, they were origially intended to be used, but refinement and other options have taken their place.
 - Reformat source looking for typos.
