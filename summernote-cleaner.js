@@ -189,7 +189,7 @@
           tagStripper = new RegExp('<' + badTags[i] + '.*?' + badTags[i] + '(.*?)>', 'gi');
           output = output.replace(tagStripper, '');
         }
-        for (vari = 0; i < keepTagContents.length; i++) {
+        for (var i = 0; i < keepTagContents.length; i++) {
           tagStripper = new RegExp('</?' + keepTagContents[i] + '.*?>', 'gi');
           output = output.replace(tagStripper, ' ');
         }
