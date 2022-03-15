@@ -1,4 +1,4 @@
-# summernote-cleaner v1.0.1
+# summernote-cleaner v1.0.2
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 
 summernote-cleaner removes the unnecessary and possibly layout breaking Crud that gets added by MSWord, Open Office, and Libre Office Documents.
