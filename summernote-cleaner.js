@@ -21,7 +21,7 @@
     },
     'de-DE': {
       cleaner: {
-        tooltip: 'Cleaner',
+        tooltip: 'Reinigungskraft',
         not: 'Inhalt wurde bereinigt!',
         limitText: 'Text',
         limitHTML: 'HTML'
