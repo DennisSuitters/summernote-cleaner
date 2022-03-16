@@ -14,7 +14,7 @@
     'en-US': {
       cleaner: {
         tooltip: 'Cleaner',
-        not: 'Text has been Cleaned!!!',
+        not: 'Text has been cleaned!',
         limitText: 'Text',
         limitHTML: 'HTML'
       }
