@@ -92,6 +92,8 @@ Limits the number of characters set by limitChars.
 Replace pasted images with a nominated placeholder.
 
 # Thanks:
+- [RichardSquires](https://github.com/RichardSquires)
+  - Several issue regarding parsing text, and updating docs.
 - [wheelspin](https://github.com/wheelspin)
   - For adding Microsoft Browsers Support, and modifying the alert.
 - [Diemen Design](https://github.com/DiemenDesign/)
