@@ -42,7 +42,8 @@ $('.summernote').summernote({
           action: 'both',
           icon: '<i class="note-icon">[Your Button]</i>',
           keepHtml: true,
-          badTags: ['applet', 'body', 'col', 'colgroup', 'embed', 'html', 'noframes', 'noscript', 'script', 'style', 'title'],
+          keepTagContents: ['span'], //Remove tags and keep the contents
+          badTags: ['applet', 'col', 'colgroup', 'embed', 'noframes', 'noscript', 'script', 'style', 'title'], //Remove full tags with contents,
           badAttributes: ['bgcolor', 'border', 'height', 'cellpadding', 'cellspacing', 'lang', 'start', 'style', 'valign', 'width'],
           limitChars: false,
           limitDisplay: 'both',

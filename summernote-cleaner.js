@@ -14,14 +14,14 @@
     'en-US': {
       cleaner: {
         tooltip: 'Cleaner',
-        not: 'Text has been Cleaned!!!',
+        not: 'Text has been cleaned!',
         limitText: 'Text',
         limitHTML: 'HTML'
       }
     },
     'de-DE': {
       cleaner: {
-        tooltip: 'Cleaner',
+        tooltip: 'Reinigungskraft',
         not: 'Inhalt wurde bereinigt!',
         limitText: 'Text',
         limitHTML: 'HTML'
