@@ -1,4 +1,4 @@
-# summernote-cleaner v1.0.3
+# summernote-cleaner v1.0.4
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 
 summernote-cleaner removes the unnecessary and possibly layout breaking Crud that gets added by MSWord, Open Office, and Libre Office Documents.
@@ -48,6 +48,7 @@ $('.summernote').summernote({
           limitChars: false,
           limitDisplay: 'both',
           limitStop: false,
+          notTimeOut: 850, //time before status message is hidden in miliseconds
           imagePlaceholder: 'https://via.placeholder.com/200' // URL, or relative path to file.
     }
 });
@@ -98,6 +99,9 @@ Replace pasted images with a nominated placeholder.
   - Check out our other Summernote Plugins via our main Github page.
 
 # CHANGELOG:
+#### v1.0.4
+- Resolved sucess status text always shown after action
+
 #### v1.0.3
 - Added feature for removing a tag whilst keeping its content
 
