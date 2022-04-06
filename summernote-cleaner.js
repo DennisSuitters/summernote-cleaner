@@ -1,5 +1,5 @@
 /* https://github.com/DiemenDesign/summernote-cleaner */
-/* Version: 1.0.3 */
+/* Version: 1.0.4 */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     define(['jquery'], factory);
@@ -39,6 +39,7 @@
       limitChars: 0, // 0|# 0 disables option
       limitDisplay: 'both', // none|text|html|both
       limitStop: false, // true/false
+      notTimeOut: 850, //time before status message is hidden in miliseconds
       imagePlaceholder: 'https://via.placeholder.com/200'
     }
   });
@@ -146,8 +147,19 @@
                 }, 1);
               } else
                 $note.summernote('pasteHTML', cleanPaste(text, options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.imagePlaceholder, isHtmlData));
-              if ($editor.find('.note-status-output').length > 0)
+              if ($editor.find('.note-status-output').length > 0) {
                 $editor.find('.note-status-output').html(lang.cleaner.not);
+                /*now set a timeout to clear out the message */
+                setTimeout(function(){
+                  if($editor.find('.note-status-output').html() == lang.cleaner.not){
+                    /*lets fade out the text, then clear it and show the control ready for next time */
+                    $editor.find('.note-status-output').fadeOut(function(){
+                      $(this).html("");
+                      $(this).fadeIn();
+                    });
+                  }
+                }, options.cleaner.notTimeOut)
+              }
             }
           }
         }
