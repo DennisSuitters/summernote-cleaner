@@ -220,8 +220,8 @@
           const badAttribute = badAttributes[i];
           /*for attribute matching ensure we match a new line or some kind of space to prevents partial matching for attributes 
           (e.g. color would modify bgcolor tag to be just bg) */
-          var attributeWithSpeachMarksStripper = new RegExp('(\s|\r\n|\r|\n| )' + badAttribute + '="[^"\v]*"', 'gmi');
-          output = output.replace(attributeWithSpeachMarksStripper, '');
+          var attributeWithSpeechMarksStripper = new RegExp('(\s|\r\n|\r|\n| )' + badAttribute + '="[^"\v]*"', 'gmi');
+          output = output.replace(attributeWithSpeechMarksStripper, '');
           var attributeWithApostropheStripper = new RegExp('(\s|\r\n|\r|\n| )' + badAttribute + "='[^'\v]*'", 'gmi');
           output = output.replace(attributeWithApostropheStripper, '');
         }
