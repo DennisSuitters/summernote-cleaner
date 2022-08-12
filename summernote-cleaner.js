@@ -1,5 +1,5 @@
 /* https://github.com/DiemenDesign/summernote-cleaner */
-/* Version: 1.0.5 */
+/* Version: 1.0.6 */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     define(['jquery'], factory);
@@ -35,7 +35,7 @@
       keepHtml: true,
       keepTagContents: ['span'], //Remove tags and keep the contents
       badTags: ['applet', 'col', 'colgroup', 'embed', 'noframes', 'noscript', 'script', 'style', 'title', 'meta', 'link', 'head'], //Remove full tags with contents
-      badAttributes: ['bgcolor', 'border', 'height', 'cellpadding', 'cellspacing', 'lang', 'start', 'style', 'valign', 'width'], //Remove attributes from remaining tags
+      badAttributes: ['bgcolor', 'border', 'height', 'cellpadding', 'cellspacing', 'lang', 'start', 'style', 'valign', 'width', 'data-(.*?)'], //Remove attributes from remaining tags
       limitChars: 0, // 0|# 0 disables option
       limitDisplay: 'both', // none|text|html|both
       limitStop: false, // true/false
