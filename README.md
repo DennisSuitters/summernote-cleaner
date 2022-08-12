@@ -1,4 +1,4 @@
-# summernote-cleaner v1.0.4
+# summernote-cleaner v1.0.5
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 
 summernote-cleaner removes the unnecessary and possibly layout breaking Crud that gets added by MSWord, Open Office, and Libre Office Documents.
@@ -43,7 +43,7 @@ $('.summernote').summernote({
           icon: '<i class="note-icon">[Your Button]</i>',
           keepHtml: true,
           keepTagContents: ['span'], //Remove tags and keep the contents
-          badTags: ['applet', 'col', 'colgroup', 'embed', 'noframes', 'noscript', 'script', 'style', 'title'], //Remove full tags with contents,
+          badTags: ['applet', 'col', 'colgroup', 'embed', 'noframes', 'noscript', 'script', 'style', 'title', 'meta', 'link', 'head'], //Remove full tags with contents
           badAttributes: ['bgcolor', 'border', 'height', 'cellpadding', 'cellspacing', 'lang', 'start', 'style', 'valign', 'width'],
           limitChars: false,
           limitDisplay: 'both',
@@ -101,6 +101,10 @@ Replace pasted images with a nominated placeholder.
   - Check out our other Summernote Plugins via our main Github page.
 
 # CHANGELOG:
+#### v1.0.5
+- Resolved tags/attributes not stripped when over one or more line
+- Resolved spaces disappearing after pasting
+
 #### v1.0.4
 - Resolved sucess status text always shown after action
 
