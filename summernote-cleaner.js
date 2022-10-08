@@ -1,5 +1,5 @@
 /* https://github.com/DiemenDesign/summernote-cleaner */
-/* Version: 1.0.6 */
+/* Version: 1.0.7 */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     define(['jquery'], factory);
@@ -141,12 +141,16 @@
               text = event.originalEvent.clipboardData.getData(dataType);
             }
             if (text) {
+              /*clean the text first to prevent issues where code view wasn't updating correctly*/
+              var cleanedContent = cleanPaste(text, options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.imagePlaceholder, isHtmlData);
               if (msie || ffox) {
                 setTimeout(function () {
-                  $note.summernote('pasteHTML', cleanPaste(text, options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.imagePlaceholder, isHtmlData));
+                  $note.summernote('pasteHTML', cleanedContent);
                 }, 1);
-              } else
-                $note.summernote('pasteHTML', cleanPaste(text, options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.imagePlaceholder, isHtmlData));
+              } else {
+                $note.summernote('pasteHTML', cleanedContent);
+              }
+
               if ($editor.find('.note-status-output').length > 0) {
                 $editor.find('.note-status-output').html(lang.cleaner.not);
                 /*now set a timeout to clear out the message */
