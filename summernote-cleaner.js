@@ -62,7 +62,7 @@
               if ($note.summernote('createRange').toString())
                 $note.summernote('pasteHTML', $note.summernote('createRange').toString());
               else
-                $note.summernote('code', cleanPaste($note.summernote('code'), options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.imagePlaceholder), true);
+                $note.summernote('code', cleanPaste($note.summernote('code'), options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.imagePlaceholder, true));
               if ($editor.find('.note-status-output').length > 0)
                 $editor.find('.note-status-output').html(lang.cleaner.not);
             }
