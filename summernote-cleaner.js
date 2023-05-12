@@ -40,6 +40,7 @@
       limitDisplay: 'both', // none|text|html|both
       limitStop: false, // true/false
       notTimeOut: 850, //time before status message is hidden in miliseconds
+      keepImages: true,
       imagePlaceholder: 'https://via.placeholder.com/200'
     }
   });
@@ -62,7 +63,7 @@
               if ($note.summernote('createRange').toString())
                 $note.summernote('pasteHTML', $note.summernote('createRange').toString());
               else
-                $note.summernote('code', cleanPaste($note.summernote('code'), options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.imagePlaceholder, true));
+                $note.summernote('code', cleanPaste($note.summernote('code'), options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.keepImages, options.cleaner.imagePlaceholder, true));
               if ($editor.find('.note-status-output').length > 0)
                 $editor.find('.note-status-output').html(lang.cleaner.not);
             }
@@ -142,7 +143,7 @@
             }
             if (text) {
               /*clean the text first to prevent issues where code view wasn't updating correctly*/
-              var cleanedContent = cleanPaste(text, options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.imagePlaceholder, isHtmlData);
+              var cleanedContent = cleanPaste(text, options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, option.cleaner.keepImages, options.cleaner.imagePlaceholder, isHtmlData);
               if (msie || ffox) {
                 setTimeout(function () {
                   $note.summernote('pasteHTML', cleanedContent);
@@ -168,9 +169,9 @@
           }
         }
       }
-      var cleanPaste = function(input, badTags, keepTagContents, badAttributes, imagePlaceholder, isHtmlData) {
+      var cleanPaste = function(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder, isHtmlData) {
         if(isHtmlData) {
-          return cleanHtmlPaste(input, badTags, keepTagContents, badAttributes, imagePlaceholder);
+          return cleanHtmlPaste(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder);
         } else {
           return cleanTextPaste(input);
         }
@@ -192,7 +193,7 @@
         return output;
       }
       
-      var cleanHtmlPaste = function(input, badTags, keepTagContents, badAttributes, imagePlaceholder) {
+      var cleanHtmlPaste = function(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder) {
         var stringStripper = /( class=(")?Mso[a-zA-Z]+(")?)/gmi;
         /*remove MS office class crud*/
         var output = input.replace(stringStripper, '');
@@ -202,7 +203,9 @@
         var commentIfStripper = new RegExp('<![^>\v]*>', 'gmi');
         output = output.replace(commentIfStripper, '');
         var tagStripper = new RegExp('<(/)*(\\?xml:|st1:|o:|v:)[^>\v]*>', 'gmi');
-        output = output.replace(/ src="(.*?)"/gmi, ' src="' + imagePlaceholder + '"');
+        if (!keepImages) {
+          output = output.replace(/ src="(.*?)"/gmi, ' src="' + imagePlaceholder + '"');
+        }
         output = output.replace(/ name="(.*?)"/gmi, ' data-title="$1" alt="$1"');
         /*remove MS office tag crud*/
         output = output.replace(tagStripper, '');
