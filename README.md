@@ -105,6 +105,9 @@ Replace pasted images with a nominated placeholder.
   - Check out our other Summernote Plugins via our main Github page.
 
 # CHANGELOG:
+#### v1.0.8
+- Resolved issue where text like `<asdf>` was accidentally counted as html when pasting from plain text context
+
 #### v1.0.7
 - Resolved issue in some cases where code view would be out of synch with editor
 
