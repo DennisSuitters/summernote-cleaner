@@ -1,5 +1,5 @@
 /* https://github.com/DiemenDesign/summernote-cleaner */
-/* Version: 1.0.7 */
+/* Version: 1.0.8 */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     define(['jquery'], factory);
@@ -178,8 +178,10 @@
 
       var cleanTextPaste = function(input) {
         var newLines = /(\r\n|\r|\n)/g;
-        var parsedInput = input.split(newLines);
-        if(parsedInput.length === 1) { return input; }
+        /*lets only replace < and > as these are the culprit for HTML tag recognition */
+        let inputEscapedHtml = input.replace('<', '&#60').replace('>', '&#62');
+        var parsedInput = inputEscapedHtml.split(newLines);
+        if(parsedInput.length === 1) { return inputEscapedHtml; }
         var output = "";
         /*for larger blocks of text (such as multiple paragraphs) match summernote markup */
         for (let contentIndex = 0; contentIndex < parsedInput.length; contentIndex++) {
