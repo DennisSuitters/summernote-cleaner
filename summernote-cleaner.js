@@ -143,7 +143,7 @@
             }
             if (text) {
               /*clean the text first to prevent issues where code view wasn't updating correctly*/
-              var cleanedContent = cleanPaste(text, options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, option.cleaner.keepImages, options.cleaner.imagePlaceholder, isHtmlData);
+              var cleanedContent = cleanPaste(text, options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.keepImages, options.cleaner.imagePlaceholder, isHtmlData);
               if (msie || ffox) {
                 setTimeout(function () {
                   $note.summernote('pasteHTML', cleanedContent);
