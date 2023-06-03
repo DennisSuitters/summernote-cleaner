@@ -49,6 +49,7 @@ $('.summernote').summernote({
       limitDisplay: 'both', // none|text|html|both
       limitStop: false, // true/false
       notTimeOut: 850, //time before status message is hidden in miliseconds
+      keepImages: true, // if false replace with imagePlaceholder
       imagePlaceholder: 'https://via.placeholder.com/200'
     }
 });
