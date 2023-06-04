@@ -1,5 +1,5 @@
 /* https://github.com/DiemenDesign/summernote-cleaner */
-/* Version: 1.0.8 */
+/* Version: 1.0.9 */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     define(['jquery'], factory);
