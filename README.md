@@ -107,7 +107,7 @@ Replace pasted images with a nominated placeholder.
 
 # CHANGELOG:
 #### v1.0.9
-- Made image placeholder optional (many thanks to [DuncanHouston](DuncanHouston))
+- Made image placeholder optional (many thanks to [DuncanHouston](https://github.com/DuncanHouston/))
 #### v1.0.8
 - Resolved issue where text like `<asdf>` was accidentally counted as html when pasting from plain text context
 
