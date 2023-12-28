@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/DiemenDesign/summernote-cleaner#readme",
   "dependencies": {
-    "summernote": "^0.8.2"
+    "summernote": "^0.8.20"
   }
 }
