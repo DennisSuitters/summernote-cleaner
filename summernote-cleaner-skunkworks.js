@@ -35,7 +35,7 @@
       keepHtml: true,
       keepTagContents: ['span'], //Remove tags and keep the contents
       badTags: ['applet', 'col', 'colgroup', 'embed', 'noframes', 'noscript', 'script', 'style', 'title', 'meta', 'link', 'head'], //Remove full tags with contents
-      badAttributes: ['bgcolor', 'border', 'height', 'cellpadding', 'cellspacing', 'lang', 'start', 'style', 'valign', 'width', 'data-(.*?)'], //Remove attributes from remaining tags
+      badAttributes: ['bgcolor', 'border', 'height', 'cellpadding', 'cellspacing', 'lang', 'start', 'style', 'valign', 'width'], //Remove attributes from remaining tags
       limitChars: 0, // 0|# 0 disables option
       limitDisplay: 'both', // none|text|html|both
       limitStop: false, // true/false
@@ -63,8 +63,8 @@
                 $note.summernote('pasteHTML', $note.summernote('createRange').toString());
               else
                 $note.summernote('code', cleanPaste($note.summernote('code'), options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.keepImages, options.cleaner.imagePlaceholder, true));
-              if ($editor.find('.note-status-output').length > 0)
-                $editor.find('.note-status-output').html(lang.cleaner.not);
+              if ($editor.find('.note-statusbar').length > 0)
+                $editor.find('.note-statusbar').html(lang.cleaner.not);
             }
           });
           return button.render();
@@ -86,7 +86,7 @@
               lengthStatus += ' / ';
             if (options.cleaner.limitDisplay === 'html' || options.cleaner.limitDisplay === 'both')
               lengthStatus += lang.cleaner.limitHTML + ': ' + codeLength.length;
-            $editor.find('.note-status-output').html('<small class="note-pull-right ' + lengthStatus + '&nbsp;</small>');
+            $editor.find('.note-statusbar').html('<small class="note-pull-right ' + lengthStatus + '&nbsp;</small>');
           }
         },
         'summernote.keydown': function (we, event) {
@@ -116,7 +116,7 @@
                 lengthStatus += ' / ';
               if (options.cleaner.limitDisplay === 'html' || options.cleaner.limitDisplay === 'both')
                 lengthStatus += lang.cleaner.limitHTML + ': ' + codeLength.length;
-              $editor.find('.note-status-output').html('<small class="cleanerLimit note-pull-right ' + lengthStatus + '&nbsp;</small>');
+              $editor.find('.note-statusbar').html('<small class="cleanerLimit note-pull-right ' + lengthStatus + '&nbsp;</small>');
             }
           }
         },
@@ -154,21 +154,23 @@
             if (text) {
               // clean the text first to prevent issues where code view wasn't updating correctly
               var cleanedContent = cleanPaste(text, options.cleaner.badTags, options.cleaner.keepTagContents, options.cleaner.badAttributes, options.cleaner.keepImages, options.cleaner.imagePlaceholder, isHtmlData);
-              if (msie || ffox) {
-                setTimeout(function () {
+              if (cleanedContent !== undefined) {
+                if (msie || ffox) {
+                  setTimeout(function () {
+                    $note.summernote('pasteHTML', cleanedContent);
+                  }, 1);
+                } else {
                   $note.summernote('pasteHTML', cleanedContent);
-                }, 1);
-              } else {
-                $note.summernote('pasteHTML', cleanedContent);
+                }
               }
 
-              if ($editor.find('.note-status-output').length > 0) {
-                $editor.find('.note-status-output').html(lang.cleaner.not);
+              if ($editor.find('.note-statusbar').length > 0) {
+                $editor.find('.note-statusbar').html(lang.cleaner.not);
                 // now set a timeout to clear out the message
                 setTimeout(function(){
-                  if($editor.find('.note-status-output').html() === lang.cleaner.not){
+                  if($editor.find('.note-statusbar').html() === lang.cleaner.not){
                     // lets fade out the text, then clear it and show the control ready for next time
-                    $editor.find('.note-status-output').fadeOut(function(){
+                    $editor.find('.note-statusbar').fadeOut(function(){
                       $(this).html("");
                       $(this).fadeIn();
                     });
@@ -267,34 +269,34 @@
         var newLines = /(\r\n|\r|\n)/g;
         input = input.replace(newLines, ' ');
 
-        sanidom = $('<div></div>').html(input)
+        sanidom = $('<div></div>').html(input);
 
         if (!keepImages) {
-          sanidom.find("img").attr('src', imagePlaceholder)
+          sanidom.find("img").attr('src', imagePlaceholder);
         }
 
         for (i = 0; i < badTags.length; i++) {
-          sanidom.find(badTags[i]).remove()
+          sanidom.find(badTags[i]).remove();
         }
 
         for (i = 0; i < keepTagContents.length; i++) {
           sanidom.find(keepTagContents[i]).replaceWith(function() {
-            return $('<span/>', { html: $(this).html() })
+            return $('<span/>', { html: $(this).html() });
           });
         }
 
         for (i = 0; i < badAttributes.length; i++) {
-          sanidom.find("[" + badAttributes[i] + "]").removeAttr(badAttributes[i])
+          sanidom.find("[" + badAttributes[i] + "]").removeAttr(badAttributes[i]);
         }
 
         sanidom.find('[align]').each(function() {
-          me = $(this)
-          me.addClass("text-" + me.attr('align'))
+          me = $(this);
+          me.addClass("text-" + me.attr('align'));
         });
 
         sanidom.contents().filter(function() {
-          return ((this.nodeType === Node.TEXT_NODE && !/\S/.test(this.nodeValue)) || this.nodeType === Node.COMMENT_NODE)
-        }).remove()
+          return ((this.nodeType === Node.TEXT_NODE && !/\S/.test(this.nodeValue)) || this.nodeType === Node.COMMENT_NODE);
+        }).remove();
 
         return sanidom.html().replace(newLines, '');
       }
