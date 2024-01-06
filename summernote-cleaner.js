@@ -46,13 +46,12 @@
   });
   $.extend( $.summernote.plugins, {
     'cleaner': function (context) {
-      var self = this,
-            ui = $.summernote.ui,
+      var   ui = $.summernote.ui,
          $note = context.layoutInfo.note,
        $editor = context.layoutInfo.editor,
        options = context.options,
           lang = options.langInfo;
-      if (options.cleaner.action == 'both' || options.cleaner.action == 'button') {
+      if (options.cleaner.action === 'both' || options.cleaner.action === 'button') {
         context.memo('button.cleaner', function () {
           var button = ui.button({
             contents: options.cleaner.icon,
@@ -73,7 +72,7 @@
       }
       this.events = {
         'summernote.init': function () {
-          if (options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none'){
+          if (options.cleaner.limitChars !== 0 || options.cleaner.limitDisplay !== 'none'){
             var textLength = $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/," ");
             var codeLength = $editor.find('.note-editable').html();
             var lengthStatus = '';
@@ -81,24 +80,24 @@
               lengthStatus += 'note-text-danger">';
             else
               lengthStatus += '">';
-            if (options.cleaner.limitDisplay == 'text' || options.cleaner.limitDisplay == 'both')
+            if (options.cleaner.limitDisplay === 'text' || options.cleaner.limitDisplay === 'both')
               lengthStatus += lang.cleaner.limitText + ': ' + textLength.length;
-            if (options.cleaner.limitDisplay == 'both')
+            if (options.cleaner.limitDisplay === 'both')
               lengthStatus += ' / ';
-            if (options.cleaner.limitDisplay == 'html' || options.cleaner.limitDisplay == 'both')
+            if (options.cleaner.limitDisplay === 'html' || options.cleaner.limitDisplay === 'both')
               lengthStatus += lang.cleaner.limitHTML + ': ' + codeLength.length;
             $editor.find('.note-status-output').html('<small class="note-pull-right ' + lengthStatus + '&nbsp;</small>');
           }
         },
         'summernote.keydown': function (we, event) {
-          if (options.cleaner.limitChars != 0 || options.cleaner.limitDisplay != 'none') {
+          if (options.cleaner.limitChars !== 0 || options.cleaner.limitDisplay !== 'none') {
             var textLength = $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/, " ");
             var codeLength = $editor.find('.note-editable').html();
             var lengthStatus = '';
-            if (options.cleaner.limitStop == true && textLength.length >= options.cleaner.limitChars) {
+            if (options.cleaner.limitStop === true && textLength.length >= options.cleaner.limitChars) {
               var key = event.keyCode;
               allowed_keys = [8, 37, 38, 39, 40, 46];
-              if ($.inArray(key,allowed_keys) != -1){
+              if ($.inArray(key,allowed_keys) !== -1){
                 $editor.find('.cleanerLimit').removeClass('note-text-danger');
                 return true;
               } else {
@@ -111,22 +110,33 @@
                 lengthStatus += 'note-text-danger">';
               else
                 lengthStatus += '">';
-              if (options.cleaner.limitDisplay == 'text' || options.cleaner.limitDisplay == 'both')
+              if (options.cleaner.limitDisplay === 'text' || options.cleaner.limitDisplay === 'both')
                 lengthStatus += lang.cleaner.limitText + ': '+textLength.length;
-              if (options.cleaner.limitDisplay == 'both')
+              if (options.cleaner.limitDisplay === 'both')
                 lengthStatus += ' / ';
-              if (options.cleaner.limitDisplay == 'html' || options.cleaner.limitDisplay == 'both')
+              if (options.cleaner.limitDisplay === 'html' || options.cleaner.limitDisplay === 'both')
                 lengthStatus += lang.cleaner.limitHTML + ': ' + codeLength.length;
               $editor.find('.note-status-output').html('<small class="cleanerLimit note-pull-right ' + lengthStatus + '&nbsp;</small>');
             }
           }
         },
         'summernote.paste': function(we, event) {
-          if (options.cleaner.action=='both' || options.cleaner.action == 'paste') {
+          if (options.cleaner.action==='both' || options.cleaner.action === 'paste') {
             event.preventDefault();
+
+            // delete selected text when pasting and paste it where the deleted text was
+            if (document.getSelection().toString().length > 0) {
+              rng = $.summernote.range;
+              r = rng.createFromSelection();
+              r.deleteContents();
+              r.ec = r.sc;
+              r.eo = r.so;
+              $note.summernote('editor.setLastRange', r.select());
+            }
+
             var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
-                msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
+                msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv:11\./);
             var ffox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
             var text; var isHtmlData = false;
             if (msie)
@@ -134,7 +144,7 @@
             else
             {
               var dataType = 'text/plain';
-              /*only get the html data if its avaialble else use plain text*/
+              /*only get the html data if its available else use plain text*/
               if (options.cleaner.keepHtml && event.originalEvent.clipboardData.types.indexOf('text/html') > -1) {
                   dataType = 'text/html';
                   isHtmlData = true;
@@ -156,7 +166,7 @@
                 $editor.find('.note-status-output').html(lang.cleaner.not);
                 /*now set a timeout to clear out the message */
                 setTimeout(function(){
-                  if($editor.find('.note-status-output').html() == lang.cleaner.not){
+                  if($editor.find('.note-status-output').html() === lang.cleaner.not){
                     /*lets fade out the text, then clear it and show the control ready for next time */
                     $editor.find('.note-status-output').fadeOut(function(){
                       $(this).html("");
@@ -188,14 +198,23 @@
         for (let contentIndex = 0; contentIndex < parsedInput.length; contentIndex++) {
           const element = parsedInput[contentIndex];
           if(!newLines.test(element)) {
-            var line = element == '' ? '<br>' : element;
+            var line = element === '' ? '<br>' : element;
             output += '<p>' + line + '</p>'
           }
         }
         return output;
       }
-      
+
       var cleanHtmlPaste = function(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder) {
+        if (typeof(window.jQuery) === 'function') {
+          cleanHtmlPasteWithjQuery(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder)
+        } else {
+          cleanHtmlPasteWithRegExp(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder)
+        }
+      }
+      
+      var cleanHtmlPasteWithRegExp = function(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder) {
+        let i;
         var stringStripper = /( class=(")?Mso[a-zA-Z]+(")?)/gmi;
         /*remove MS office class crud*/
         var output = input.replace(stringStripper, '');
@@ -211,7 +230,7 @@
         output = output.replace(/ name="(.*?)"/gmi, ' data-title="$1" alt="$1"');
         /*remove MS office tag crud*/
         output = output.replace(tagStripper, '');
-        for (var i = 0; i < badTags.length; i++) {
+        for (i = 0; i < badTags.length; i++) {
           const badTag = badTags[i];
           /*remove the tag and its contents*/
           tagStripper = new RegExp('<' + badTag + '(.|\r|\n)*</' + badTag + '[^>\v]*>', 'gmi');
@@ -220,12 +239,12 @@
           var singletonTagStripper = new RegExp('</?' + badTag + '[^>\v]*>', 'gmi');
           output = output.replace(singletonTagStripper, '');
         }
-        for (var i = 0; i < keepTagContents.length; i++) {
+        for (i = 0; i < keepTagContents.length; i++) {
           /*remove tags only*/
           tagStripper = new RegExp('</?' + keepTagContents[i] + '[^>\v]*>', 'gmi');
           output = output.replace(tagStripper, ' ');
         }
-        for (var i = 0; i < badAttributes.length; i++) {
+        for (i = 0; i < badAttributes.length; i++) {
           const badAttribute = badAttributes[i];
           /*for attribute matching ensure we match a new line or some kind of space to prevents partial matching for attributes 
           (e.g. color would modify bgcolor tag to be just bg) */
@@ -241,6 +260,41 @@
         output = output.replace(/<i>(.*?)<\/i>/gi, '<em>$1</em>');
         output = output.replace(/\s{2,}/g, ' ').trim();
         return output;
+      }
+
+      // Doing similar thing as RegExp one but keeping the classes and <b> <i> as is
+      var cleanHtmlPasteWithjQuery = function(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder) {
+        let i;
+        var newLines = /(\r\n|\r|\n)/g;
+        input = input.replace(newLines, ' ');
+
+        sanidom = $('<div></div>').html(input)
+
+        if (!keepImages) {
+          sanidom.find("img").attr('src', imagePlaceholder)
+        }
+
+        for (i = 0; i < badTags.length; i++) {
+          sanidom.find(badTags[i]).remove()
+        }
+        for (i = 0; i < keepTagContents.length; i++) {
+          sanidom.find(keepTagContents[i]).replaceWith(function() {
+            return $('<span/>', { html: $(this).html() })
+          });
+        }
+        for (i = 0; i < badAttributes.length; i++) {
+          sanidom.find("[" + badAttributes[i] + "]").removeAttr(badAttributes[i])
+        }
+        sanidom.find('[align]').each(function() {
+          me = $(this)
+          me.addClass("text-" + me.attr('align'))
+        });
+
+        sanidom.contents().filter(function() {
+          return ((this.nodeType === Node.TEXT_NODE && !/\S/.test(this.nodeValue)) || this.nodeType === Node.COMMENT_NODE)
+        }).remove()
+
+        return sanidom.html().replace(newLines, '');
       }
     }
   });
