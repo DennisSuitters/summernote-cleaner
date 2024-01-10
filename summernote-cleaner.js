@@ -35,7 +35,7 @@
       keepHtml: true,
       keepTagContents: ['span'], //Remove tags and keep the contents
       badTags: ['applet', 'col', 'colgroup', 'embed', 'noframes', 'noscript', 'script', 'style', 'title', 'meta', 'link', 'head'], //Remove full tags with contents
-      badAttributes: ['bgcolor', 'border', 'height', 'cellpadding', 'cellspacing', 'lang', 'start', 'style', 'valign', 'width', 'data-(.*?)'], //Remove attributes from remaining tags
+      badAttributes: ['bgcolor', 'border', 'height', 'cellpadding', 'cellspacing', 'lang', 'start', 'style', 'valign', 'width', 'data-(.*?)'], //Remove attributes from remaining tags, NB. 'data-(.*?)' would fail when cleaning with jQuery
       limitChars: 0, // 0|# 0 disables option
       limitDisplay: 'both', // none|text|html|both
       limitStop: false, // true/false
@@ -128,9 +128,7 @@
             if (document.getSelection().toString().length > 0) {
               rng = $.summernote.range;
               r = rng.createFromSelection();
-              r.deleteContents();
-              r.ec = r.sc;
-              r.eo = r.so;
+              r = r.deleteContents();
               $note.summernote('editor.setLastRange', r.select());
             }
 
