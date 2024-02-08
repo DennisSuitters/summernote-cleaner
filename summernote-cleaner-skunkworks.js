@@ -209,9 +209,9 @@
 
       var cleanHtmlPaste = function(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder) {
         if (typeof(window.jQuery) === 'function') {
-          cleanHtmlPasteWithjQuery(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder)
+          return cleanHtmlPasteWithjQuery(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder)
         } else {
-          cleanHtmlPasteWithRegExp(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder)
+          return cleanHtmlPasteWithRegExp(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder)
         }
       }
 
