@@ -72,22 +72,7 @@
       }
       this.events = {
         'summernote.init': function () {
-          if (options.cleaner.limitChars !== 0 || options.cleaner.limitDisplay !== 'none'){
-            var textLength = $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/," ");
-            var codeLength = $editor.find('.note-editable').html();
-            var lengthStatus = '';
-            if (textLength.length > options.cleaner.limitChars&&options.cleaner.limitChars > 0)
-              lengthStatus += 'note-text-danger">';
-            else
-              lengthStatus += '">';
-            if (options.cleaner.limitDisplay === 'text' || options.cleaner.limitDisplay === 'both')
-              lengthStatus += lang.cleaner.limitText + ': ' + textLength.length;
-            if (options.cleaner.limitDisplay === 'both')
-              lengthStatus += ' / ';
-            if (options.cleaner.limitDisplay === 'html' || options.cleaner.limitDisplay === 'both')
-              lengthStatus += lang.cleaner.limitHTML + ': ' + codeLength.length;
-            $editor.find('.note-statusbar').html('<small class="note-pull-right ' + lengthStatus + '&nbsp;</small>');
-          }
+          buildLengthStatusDisplay();
         },
         'summernote.keydown': function (we, event) {
           if (options.cleaner.limitChars !== 0 || options.cleaner.limitDisplay !== 'none') {
@@ -173,6 +158,7 @@
                     $editor.find('.note-statusbar').fadeOut(function(){
                       $(this).html("");
                       $(this).fadeIn();
+                      buildLengthStatusDisplay();
                     });
                   }
                 }, options.cleaner.notTimeOut)
@@ -181,6 +167,26 @@
           }
         }
       }
+
+      var buildLengthStatusDisplay = function() {
+    		if (options.cleaner.limitChars !== 0 || options.cleaner.limitDisplay !== 'none'){
+    			var textLength = $editor.find(".note-editable").text().replace(/(<([^>]+)>)/ig, "").replace(/( )/," ");
+    			var codeLength = $editor.find('.note-editable').html();
+    			var lengthStatus = '';
+    			if (textLength.length > options.cleaner.limitChars&&options.cleaner.limitChars > 0)
+    				lengthStatus += 'note-text-danger">';
+    			else
+    				lengthStatus += '">';
+    			if (options.cleaner.limitDisplay === 'text' || options.cleaner.limitDisplay === 'both')
+    				lengthStatus += lang.cleaner.limitText + ': ' + textLength.length;
+    			if (options.cleaner.limitDisplay === 'both')
+    				lengthStatus += ' / ';
+    			if (options.cleaner.limitDisplay === 'html' || options.cleaner.limitDisplay === 'both')
+    				lengthStatus += lang.cleaner.limitHTML + ': ' + codeLength.length;
+    			$editor.find('.note-status-output').html('<small class="note-pull-right ' + lengthStatus + '&nbsp;</small>');
+    		}
+	    }
+      
       var cleanPaste = function(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder, isHtmlData) {
         if(isHtmlData) {
           return cleanHtmlPaste(input, badTags, keepTagContents, badAttributes, keepImages, imagePlaceholder);
