@@ -281,7 +281,7 @@
 
         for (i = 0; i < keepTagContents.length; i++) {
           sanidom.find(keepTagContents[i]).replaceWith(function() {
-            return $('<span/>', { html: $(this).html() });
+            return $(this).html();
           });
         }
 
