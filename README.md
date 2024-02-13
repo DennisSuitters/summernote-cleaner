@@ -48,6 +48,7 @@ $('.summernote').summernote({
       limitChars: 0, // 0|# 0 disables option
       limitDisplay: 'both', // none|text|html|both
       limitStop: false, // true/false
+	  limitType: 'text', // text|html
       notTimeOut: 850, //time before status message is hidden in miliseconds
       keepImages: true, // if false replace with imagePlaceholder
       imagePlaceholder: 'https://via.placeholder.com/200'
@@ -71,7 +72,7 @@ Options: ( both | button | paste )
 Removes the tag but keeps the contents, e.g. useful for removing links or spans without losing text content
 
 **badTags:**
-Remove full tags with contents. Tags listed by name only ['style',  'script']`
+Remove full tags with contents. Tags listed by name only `['style',  'script']`
 NB: any tag not present in keepTagContents or badTags will remain
 
 **badAttributes:**
@@ -93,6 +94,11 @@ Options: ( text | html | both )
 Limits the number of characters set by limitChars.
 - true = stops input
 - false = doesn't stop input
+
+**limitType**
+Determines whether the limit is based on the text or html content length. Defaults to text if the option is not provided.
+- text = uses the text content to calculate length for the limit
+- html = uses the html content to calculate length for the limit
 
 **imagePlaceholder:**
 Replace pasted images with a nominated placeholder.
