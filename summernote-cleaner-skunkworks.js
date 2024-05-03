@@ -287,7 +287,7 @@
 
         for (i = 0; i < keepTagContents.length; i++) {
           sanidom.find(keepTagContents[i]).replaceWith(function() {
-            return $(this).html();
+            return cleanReplacement(keepTagContents[i], $(this).html());
           });
         }
 
@@ -306,6 +306,18 @@
 
         return sanidom.html().replace(newLines, '');
       }
+
+      var cleanReplacement = function(targetTag, replacement) {
+        var $test = $('<div />').append(replacement);
+        if ($test.find(targetTag).length > 0) {
+          $test.find(targetTag).replaceWith(function() {
+            return cleanReplacement(targetTag, $(this).html())
+          });
+          return $test.html();
+        }
+        return replacement;
+      }
+      
     }
   });
 }));
