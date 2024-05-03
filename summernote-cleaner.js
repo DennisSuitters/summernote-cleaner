@@ -313,8 +313,8 @@
 
           for (i = 0; i < keepTagContents.length; i++) {
             sanidom.find(keepTagContents[i]).replaceWith(function() {
-	            return cleanReplacement(keepTagContents[i], $(this).html());
-      			});
+              return cleanReplacement(keepTagContents[i], $(this).html());
+            });
           }
 
           for (i = 0; i < badAttributes.length; i++) {
@@ -350,9 +350,9 @@
               return cleanReplacement(targetTag, $(this).html())
             });
             return $test.html();
-	        }
-	        return replacement;
-	      }
+          }
+          return replacement;
+        }
         
       }
     });
