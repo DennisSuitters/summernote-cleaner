@@ -312,9 +312,9 @@
           sanidom.find(':empty').remove();
 
           for (i = 0; i < keepTagContents.length; i++) {
-            sanidom.find(keepTagContents[i]).replaceWith(function () {
-              return $(this).html();
-            });
+            sanidom.find(keepTagContents[i]).replaceWith(function() {
+      				return cleanReplacement(keepTagContents[i], $(this).html());
+      			});
           }
 
           for (i = 0; i < badAttributes.length; i++) {
@@ -342,6 +342,18 @@
           
           return sanidom.html().replace(newLines, '');
         }
+        
+        var cleanReplacement = function(targetTag, replacement) {
+          var $test = $('<div />').append(replacement);
+          if ($test.find(targetTag).length > 0) {
+            $test.find(targetTag).replaceWith(function() {
+              return cleanReplacement(targetTag, $(this).html())
+            });
+				    return $test.html();
+			    }
+			    return replacement;
+		    }
+        
       }
     });
   }));
